@@ -5,13 +5,11 @@ import top.wycfight.thankspring.bean.User;
 import java.util.List;
 
 /**
- * created with IntelliJ IDEA.
- * author: fxbin
- * date: 2018/10/21
- * time: 5:55
- * version: 1.0
- * description:
- */
+ * @author: wycfight@163.com
+ * @description: 用户Controller
+ * @create: 2018-11-08 20:37
+ * @modify By:
+ **/
 @Mapper
 public interface UserMapper {
 

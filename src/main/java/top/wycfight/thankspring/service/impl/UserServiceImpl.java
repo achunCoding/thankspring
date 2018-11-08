@@ -9,7 +9,12 @@ import top.wycfight.thankspring.service.UserService;
 
 import javax.annotation.Resource;
 import java.util.List;
-
+/**
+ * @author: wycfight@163.com
+ * @description: 用户Controller
+ * @create: 2018-11-08 20:37
+ * @modify By:
+ **/
 @Service
 public class UserServiceImpl implements UserService {
 
