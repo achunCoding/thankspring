@@ -1,6 +1,4 @@
 package top.wycfight.thankspring;
-
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,9 +6,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 
 @SpringBootApplication()
-public class ThankspringApplication {
+public class AdminApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ThankspringApplication.class, args);
+        SpringApplication.run(AdminApplication.class, args);
     }
 }

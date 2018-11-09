@@ -1,7 +1,5 @@
-package top.wycfight.thankspring.service.impl;
+package top.wycfight.thankspring.modules.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import top.wycfight.thankspring.bean.User;
 import top.wycfight.thankspring.mapper.UserMapper;
@@ -23,10 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object listAll(int page, int size) {
-        PageHelper.startPage(page, size);
-        List<User> userList = userMapper.listAll();
-        PageInfo<User> pageInfo = new PageInfo<>(userList);
-        return pageInfo;
+        return null;
     }
 
     @Override
