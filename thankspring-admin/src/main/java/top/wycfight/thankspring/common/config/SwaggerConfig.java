@@ -1,4 +1,4 @@
-package top.wycfight.thankspring.config;
+package top.wycfight.thankspring.common.config;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;

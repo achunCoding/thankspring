@@ -1,4 +1,4 @@
-package top.wycfight.thankspring.config.mybatis;
+package top.wycfight.thankspring.common.config;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 public class MapperAspect {
     private static final Logger logger = LoggerFactory.getLogger(MapperAspect.class);
 
-    @AfterReturning("execution(* top.wycfight.thankspring.mapper..*Mapper.*(..))")
+    @AfterReturning("execution(* top.wycfight.thankspring.modules.sys.mapper.*Mapper.*(..))")
     public void logServiceAccess(JoinPoint joinPoint) {
         logger.info("Completed: " + joinPoint);
     }
@@ -30,7 +30,7 @@ public class MapperAspect {
     /**
      * 监控com.quick.druid.mapper..*Mapper及其子包的所有public方法
      */
-    @Pointcut("execution(* top.wycfight.thankspring.mapper..*Mapper.*(..))")
+    @Pointcut("execution(* top.wycfight.thankspring.modules.sys.mapper.*Mapper.*(..))")
     private void pointCutMethod() {
     }
 

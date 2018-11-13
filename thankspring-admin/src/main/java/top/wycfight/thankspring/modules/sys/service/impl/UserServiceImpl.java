@@ -1,12 +1,10 @@
 package top.wycfight.thankspring.modules.service.impl;
 
 import org.springframework.stereotype.Service;
-import top.wycfight.thankspring.bean.User;
-import top.wycfight.thankspring.mapper.UserMapper;
 import top.wycfight.thankspring.service.UserService;
 
 import javax.annotation.Resource;
-import java.util.List;
+
 /**
  * @author: wycfight@163.com
  * @description: 用户Controller
