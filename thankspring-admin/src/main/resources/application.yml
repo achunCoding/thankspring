@@ -1,37 +1,29 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 80
+  servlet:
+    context-path: /thank-spring
+# 配置之后可以在页面上使用 ${request.contextPath}
+
+
 spring:
-  application:
-    name: thank_spring
-
-  datasource:
-    username: root
-    password: 1234
-    url: jdbc:mysql://localhost:3306/thank_spring?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true
-    continue-on-error: true
-    sql-script-encoding: UTF-8
-    driver-class-name: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      initial-size: 5
-      min-idle: 5
-      max-active: 20
-      max-wait: 60000
-      # 间隔多久进行一次检测，检测需要关闭的空闲连接
-      time-between-eviction-runs-millis: 60000
-      # 一个连接在池中最小生存的时间
-      min-evictable-idle-time-millis: 300000
-      validation-query: SELECT 1 FROM DUAL
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 20
-      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-      use-global-data-source-stat: true
-      filters: stat,wall,log4j2
-      stat-view-servlet:
-        login-username: admin
-        login-password: 123456
-
+  profiles:
+    active: prod
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  freemarker:
+      suffix: .html
+      request-context-attribute: request
 mybatis:
   type-aliases-package: top.wycfight.thankspring.mybaits.*
   configuration:
@@ -41,5 +33,25 @@ mybatis:
     use-generated-keys: true
     default-statement-timeout: 60
     default-fetch-size: 100
-server:
-  port: 80
+
+# Swagger界面内容配置
+swagger:
+  title: Thank API接口文档
+  description: good good study, day day up!
+  version: 1.0.0
+  termsOfServiceUrl: http://wycfight.top
+  contact:
+    name: ASpring
+    url: http://wycfight.top
+    email: wycfight@163.com
+
+# Login页面一些参数
+login:
+  title: 随便做做啊
+
+# 配置redis和shiro 缓存是否开启
+thank:
+  redis:
+    open: false  # 是否开启redis缓存  true开启   false关闭
+  shiro:
+    redis: false # true表示shiro session存到redis里，需要开启redis，才会生效【分布式场景】

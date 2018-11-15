@@ -3,6 +3,7 @@ package top.wycfight.thankspring.modules.sys.bean;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import top.wycfight.common.validator.group.AddGroup;
 import top.wycfight.common.validator.group.UpdateGroup;
@@ -80,7 +81,14 @@ public class SysUserEntity implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date updateTime;
 
     /**
      * 部门ID
@@ -218,6 +226,22 @@ public class SysUserEntity implements Serializable {
      */
     public Date getCreateTime() {
         return createTime;
+    }
+
+    /**
+     * 获取：创建时间
+     * @return
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * 设置：更新时间
+     * @param updateTime
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public List<Long> getRoleIdList() {
