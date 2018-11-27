@@ -1,5 +1,6 @@
 package top.wycfight.thankspring.modules.sys.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,15 @@ import java.util.HashMap;
  **/
 @Controller
 public class SysPageController {
+
+    @Value("${geetest.geetest_id}")
+    private String  geetestId;
+
+    @Value("${geetest.geetest_key}")
+    private String geetestKey;
+
+    @Value("${geetest.newfailback: false}")
+    private boolean newFailBack;
 
     @RequestMapping("modules/{module}/{url}.html")
     public String module(@PathVariable("module") String module, @PathVariable("url") String url) {
@@ -50,8 +60,8 @@ public class SysPageController {
     @RequestMapping("gt/register")
     @ResponseBody
     public String generateCode(HttpServletRequest request) {
-        GeetestLib gtSdk = new GeetestLib(GeetestConfig02.getGeetest_id(), GeetestConfig02.getGeetest_key(),
-                GeetestConfig02.isnewfailback());
+        GeetestLib gtSdk = new GeetestLib(geetestId, geetestKey,
+                newFailBack);
 
         String resStr = "{}";
 

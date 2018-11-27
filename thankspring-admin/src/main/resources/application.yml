@@ -24,6 +24,20 @@ spring:
   freemarker:
       suffix: .html
       request-context-attribute: request
+  # RabbitMQ消息队列
+  rabbitmq:
+    host: 192.168.0.132
+    username: guest
+    password: guest
+    port: 5672
+  # 全文检索ES
+  elasticsearch:
+    jest:
+      uris: http://192.168.0.132:9200
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 192.168.0.132:9300
 mybatis:
   type-aliases-package: top.wycfight.thankspring.mybaits.*
   configuration:
@@ -45,9 +59,6 @@ swagger:
     url: http://wycfight.top
     email: wycfight@163.com
 
-# Login页面一些参数
-login:
-  title: 随便做做啊
 
 # 配置redis和shiro 缓存是否开启
 thank:
@@ -55,3 +66,12 @@ thank:
     open: false  # 是否开启redis缓存  true开启   false关闭
   shiro:
     redis: false # true表示shiro session存到redis里，需要开启redis，才会生效【分布式场景】
+
+
+# 极验验证码的ID和KEY
+#ID 002bc30ff1eef93e912f45814945e752
+#KEY 4193a0e3247b82a26f563d595c447b1a
+geetest:
+  geetest_id: 48a6ebac4ebc6642d68c217fca33eb4d
+  geetest_key: 4f1c085290bec5afdc54df73535fc361
+  newfailback: false

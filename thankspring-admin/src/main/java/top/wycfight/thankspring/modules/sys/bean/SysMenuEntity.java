@@ -1,6 +1,7 @@
 package top.wycfight.thankspring.modules.sys.bean;
 
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class SysMenuEntity {
     /**
      * 菜单ID
      */
+    @TableId
     private Long menuId;
 
     /**
