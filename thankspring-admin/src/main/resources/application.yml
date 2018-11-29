@@ -34,10 +34,10 @@ spring:
   elasticsearch:
     jest:
       uris: http://192.168.0.132:9200
-  data:
-    elasticsearch:
-      cluster-name: elasticsearch
-      cluster-nodes: 192.168.0.132:9300
+#  data:
+#    elasticsearch:
+#      cluster-name: elasticsearch
+#      cluster-nodes: 192.168.0.132:9300
 mybatis:
   type-aliases-package: top.wycfight.thankspring.mybaits.*
   configuration:

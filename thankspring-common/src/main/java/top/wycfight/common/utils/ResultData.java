@@ -13,7 +13,7 @@ public class ResultData extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
     public ResultData() {
-        put("code", 0);
+        put("code", 200);
         put("msg", "success");
     }
 

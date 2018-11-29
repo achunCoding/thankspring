@@ -13,19 +13,19 @@ import org.springframework.context.annotation.Configuration;
  * @create: 2018-11-27 13:09
  * @modified By:
  **/
-@Slf4j
-@Configuration
-public class ElasticSearchConfiguration implements InitializingBean {
-    private final Logger logger = LoggerFactory.getLogger(ElasticSearchConfiguration.class);
-
-    static {
-        System.setProperty("es.set.netty.runtime.available.processors", "false");
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        logger.info("****************************************************");
-        logger.info("es.set.netty.runtime.available.processors:{}",System.getProperty("es.set.netty.runtime.available.processors"));
-        logger.info("****************************************************");
-    }
-}
+//@Slf4j
+//@Configuration
+//public class ElasticSearchConfiguration implements InitializingBean {
+//    private final Logger logger = LoggerFactory.getLogger(ElasticSearchConfiguration.class);
+//
+//    static {
+//        System.setProperty("es.set.netty.runtime.available.processors", "false");
+//    }
+//
+//    @Override
+//    public void afterPropertiesSet() throws Exception {
+//        logger.info("****************************************************");
+//        logger.info("es.set.netty.runtime.available.processors:{}",System.getProperty("es.set.netty.runtime.available.processors"));
+//        logger.info("****************************************************");
+//    }
+//}

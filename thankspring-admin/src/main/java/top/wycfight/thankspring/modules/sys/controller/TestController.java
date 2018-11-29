@@ -17,7 +17,7 @@ public class TestController {
         throw new MyException("发生错误2");
     }
 
-    @RequestMapping("/hello")
+    @RequestMapping("/hello11")
     public String hello() throws Exception {
         throw new Exception("发生错误");
     }
