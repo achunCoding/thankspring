@@ -38,15 +38,6 @@ spring:
 #    elasticsearch:
 #      cluster-name: elasticsearch
 #      cluster-nodes: 192.168.0.132:9300
-mybatis:
-  type-aliases-package: top.wycfight.thankspring.mybaits.*
-  configuration:
-    map-underscore-to-camel-case: true
-    # 打印sql, 方便调试
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    use-generated-keys: true
-    default-statement-timeout: 60
-    default-fetch-size: 100
 
 # Swagger界面内容配置
 swagger:
@@ -69,9 +60,39 @@ thank:
 
 
 # 极验验证码的ID和KEY
-#ID 002bc30ff1eef93e912f45814945e752
-#KEY 4193a0e3247b82a26f563d595c447b1a
+#ID 002bc30ff1eef93e912f45814945e752      48a6ebac4ebc6642d68c217fca33eb4d
+#KEY 4193a0e3247b82a26f563d595c447b1a     4f1c085290bec5afdc54df73535fc361
 geetest:
-  geetest_id: 48a6ebac4ebc6642d68c217fca33eb4d
-  geetest_key: 4f1c085290bec5afdc54df73535fc361
-  newfailback: false
+  geetest_id: 002bc30ff1eef93e912f45814945e752
+  geetest_key: 4193a0e3247b82a26f563d595c447b1a
+  newfailback: true
+
+
+
+# mybatis
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  # 实体扫描，多个Package用逗号或者分号分隔
+  type-aliases-package: top.wycfight.thankspring.modules.*.bean
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 1
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    # Sequence序列接口实现类配置
+    #key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
+    #逻辑删除配置
+    logic-delete-value: -1
+    logic-not-delete-value: 0
+    #自定义SQL注入器
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true

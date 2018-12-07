@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.wycfight.thankspring.modules.sys.mapper.SysMenuMapper">
+    <select id="queryListParentId" resultType="top.wycfight.thankspring.modules.sys.bean.SysMenuEntity">
+        SELECT * FROM sys_menu where parent_id = #{parentId} ORDER BY order_num asc
+    </select>
+
+
+
+</mapper>

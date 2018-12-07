@@ -70,7 +70,7 @@ public class UserRealm extends AuthorizingRealm {
     }
 
     /**
-     * 认证
+     * 认证（login）
      *
      * @param authenticationToken
      * @return
@@ -84,7 +84,6 @@ public class UserRealm extends AuthorizingRealm {
         SysUserEntity user = new SysUserEntity();
         user.setUsername(user.getUsername());
         user = sysUserMapper.selectOne(user);
-
         // 账号不存在
         if (user == null) {
             throw new UnknownAccountException("账号或密码不正确");

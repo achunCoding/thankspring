@@ -6,6 +6,7 @@
     <title>感谢Chun系统</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" href="${request.contextPath}/public/favicon.ico">
     <link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap.min.css">
     <link rel="stylesheet" href="${request.contextPath}/statics/css/font-awesome.min.css">
     <link rel="stylesheet" href="${request.contextPath}/statics/css/AdminLTE.min.css">
@@ -51,15 +52,14 @@
         <div class="form-group has-feedback">
             <label>完成验证：</label>
             <div id="captcha1">
-                <p id="wait1" class="show">正在加载验证码......</p>
+                </div>
             </div>
-        </div>
-        <br>
-        <p id="notice1" class="hide">请先完成验证</p>
+            <br>
+            <p id="notice1" class="hide">请先完成验证</p>
 
-        <div class="row">
-            <div class="col-xs-8">
-                <div class="checkbox icheck">
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
                 </div>
             </div>
             <!-- /.col -->
@@ -109,12 +109,11 @@
                     data: data,
                     dataType: "json",
                     success: function (result) {
-                        if (result.code == 0) {//登录成功
-                            parent.location.href = 'index.html';
+                        if (result.code === 200) {//登录成功
+                            parent.location.href = 'index2.html';
                         } else {
                             vm.error = true;
                             vm.errorMsg = result.msg;
-
                             vm.refreshCode();
                         }
                     }
@@ -143,7 +142,7 @@
         // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html
     };
     $.ajax({
-        url: "gt/register?t=" + (new Date()).getTime(), // 加随机数防止缓存
+        url: "gt/register?t=" + $.now(), // 加随机数防止缓存
         type: "get",
         dataType: "json",
         success: function (data) {

@@ -1,6 +1,7 @@
 //生成菜单
 var menuItem = Vue.extend({
     name: 'menu-item',
+	// 进行子父组件传值
     props:{item:{}},
     template:[
         '<li>',
@@ -47,12 +48,14 @@ var vm = new Vue({
 	},
 	methods: {
 		getMenuList: function (event) {
-			$.getJSON("sys/menu/nav?_"+$.now(), function(r){
+			$.getJSON("sys/menu/navigation?_"+$.now(), function(r){
+				console.log("我也执行了啊 menu");
 				vm.menuList = r.menuList;
 			});
 		},
 		getUser: function(){
 			$.getJSON("sys/user/info?_"+$.now(), function(r){
+				console.log("我执行了啊");
 				vm.user = r.user;
 			});
 		},
