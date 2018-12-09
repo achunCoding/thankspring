@@ -7,14 +7,14 @@ var menuItem = Vue.extend({
         '<li>',
         '	<a v-if="item.type === 0" href="javascript:;">',
         '		<i v-if="item.icon != null" :class="item.icon"></i>',
-        '		<span>{{item.name}}</span>',
-        '		<i class="fa fa-angle-left pull-right"></i>',
+        '		<span class="nav-label">{{item.name}}</span>',
+        '		<span class="fa arrow"></span>',
         '	</a>',
-        '	<ul v-if="item.type === 0" class="treeview-menu">',
+        '	<ul v-if="item.type === 0" class="nav nav-second-level">',
         '		<menu-item :item="item" v-for="item in item.list"></menu-item>',
         '	</ul>',
 
-        '	<a v-if="item.type === 1 && item.parentId === 0" :href="\'#\'+item.url">',
+        '	<a v-if="item.type === 1 && item.parentId === 0" :href="\'#\'+item.url" class="J_menuItem">',
         '		<i v-if="item.icon != null" :class="item.icon"></i>',
         '		<span>{{item.name}}</span>',
         '	</a>',
@@ -49,13 +49,11 @@ var vm = new Vue({
 	methods: {
 		getMenuList: function (event) {
 			$.getJSON("sys/menu/navigation?_"+$.now(), function(r){
-				console.log("我也执行了啊 menu");
 				vm.menuList = r.menuList;
 			});
 		},
 		getUser: function(){
 			$.getJSON("sys/user/info?_"+$.now(), function(r){
-				console.log("我执行了啊");
 				vm.user = r.user;
 			});
 		},

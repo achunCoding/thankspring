@@ -19,7 +19,7 @@ import java.util.List;
  * @modified By:
  **/
 @Service("sysMenuServiceImpl")
-public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper,SysMenuEntity> implements SysMenuService {
+public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> implements SysMenuService {
 
     @Autowired
     private SysUserService sysUserService;
@@ -46,7 +46,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper,SysMenuEntity>
             if (menuIdList.contains(sysMenuEntity.getMenuId())) {
                 userMenuList.add(sysMenuEntity);
             }
-            
+
         }
         return userMenuList;
     }
@@ -60,6 +60,23 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper,SysMenuEntity>
     private List<SysMenuEntity> getAllMenuList(List<Long> menuIdList) {
         // 查询根菜单列表
         List<SysMenuEntity> menuList = queryListParentId(0L, menuIdList);
+        // 递归获取子菜单
+        getMenuTreeList(menuList,menuIdList);
         return menuList;
+    }
+
+    /**
+     * 递归
+     */
+    private List<SysMenuEntity> getMenuTreeList(List<SysMenuEntity> menuList, List<Long> menuIdList) {
+        List<SysMenuEntity> subMenuList = new ArrayList<>();
+
+        for (SysMenuEntity sysMenuEntity : menuList) {
+            if (sysMenuEntity.getType() == Constant.MenuType.CATALOG.getValue()) {
+                sysMenuEntity.setList(getMenuTreeList(queryListParentId(sysMenuEntity.getMenuId(), menuIdList), menuIdList));
+            }
+            subMenuList.add(sysMenuEntity);
+        }
+        return subMenuList;
     }
 }
