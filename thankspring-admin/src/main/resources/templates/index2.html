@@ -58,6 +58,37 @@
 
                 <!-- vue生成的菜单 -->
                 <menu-item :item="item" v-for="item in menuList"></menu-item>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa fa-bar-chart-o"></i>
+                        <span class="nav-label">统计图表</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a class="J_menuItem" href="graph_echarts.html">百度ECharts</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="graph_flot.html">Flot</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="graph_morris.html">Morris.js</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="graph_rickshaw.html">Rickshaw</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="graph_peity.html">Peity</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="graph_sparkline.html">Sparkline</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="graph_metrics.html">图表组合</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>
@@ -189,10 +220,11 @@
         <div class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${request.contextPath}/statics/index_v1.html?v=4.0" frameborder="0" data-id="index_v1.html" seamless></iframe>
         </div>
-        <div class="footer">
-            <div class="pull-right">&copy; 2014-2015 <a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>
-            </div>
-        </div>
+        <!-- 授权-->
+        <!--<div class="footer">-->
+            <!--<div class="pull-right">&copy; 2014-2015 <a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
     <!--右侧部分结束-->
     <!--右侧边栏开始-->
@@ -609,6 +641,10 @@
 
 <!-- 全局js -->
 <script src="${request.contextPath}/statics/js/hplus/js/jquery.min.js?v=2.1.4"></script>
+<!-- Vue.js-->
+<script src="${request.contextPath}/statics/libs/vue.js"></script>
+<script src="${request.contextPath}/statics/libs/router.js"></script>
+
 <script src="${request.contextPath}/statics/js/hplus/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="${request.contextPath}/statics/js/hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="${request.contextPath}/statics/js/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
@@ -618,13 +654,11 @@
 <script src="${request.contextPath}/statics/js/hplus/js/hplus.js?v=4.1.0"></script>
 <script src="${request.contextPath}/statics/js/hplus/js/contabs.js"></script>
 
-<!-- Vue.js-->
-<script src="${request.contextPath}/statics/libs/vue.js"></script>
-<script src="${request.contextPath}/statics/libs/router.js"></script>
+
 
 <!-- 第三方插件 -->
 <script src="${request.contextPath}/statics/js/hplus/js/plugins/pace/pace.min.js"></script>
-<script src="${request.contextPath}/statics/js/index.js"></script>
+<script src="${request.contextPath}/statics/js/index2.js"></script>
 
 
 </body>

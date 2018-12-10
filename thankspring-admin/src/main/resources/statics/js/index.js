@@ -1,20 +1,19 @@
 //生成菜单
 var menuItem = Vue.extend({
     name: 'menu-item',
-	// 进行子父组件传值
     props:{item:{}},
     template:[
         '<li>',
         '	<a v-if="item.type === 0" href="javascript:;">',
         '		<i v-if="item.icon != null" :class="item.icon"></i>',
-        '		<span class="nav-label">{{item.name}}</span>',
-        '		<span class="fa arrow"></span>',
+        '		<span>{{item.name}}</span>',
+        '		<i class="fa fa-angle-left pull-right"></i>',
         '	</a>',
-        '	<ul v-if="item.type === 0" class="nav nav-second-level">',
+        '	<ul v-if="item.type === 0" class="treeview-menu">',
         '		<menu-item :item="item" v-for="item in item.list"></menu-item>',
         '	</ul>',
 
-        '	<a v-if="item.type === 1 && item.parentId === 0" :href="\'#\'+item.url" class="J_menuItem">',
+        '	<a v-if="item.type === 1 && item.parentId === 0" :href="\'#\'+item.url">',
         '		<i v-if="item.icon != null" :class="item.icon"></i>',
         '		<span>{{item.name}}</span>',
         '	</a>',
@@ -48,7 +47,7 @@ var vm = new Vue({
 	},
 	methods: {
 		getMenuList: function (event) {
-			$.getJSON("sys/menu/navigation?_"+$.now(), function(r){
+			$.getJSON("sys/menu/nav?_"+$.now(), function(r){
 				vm.menuList = r.menuList;
 			});
 		},
@@ -119,6 +118,7 @@ function routerList(router, menuList){
 			routerList(router, menu.list);
 		}else if(menu.type == 1){
 			router.add('#'+menu.url, function() {
+				console.log("haha");
 				var url = window.location.hash;
 				
 				//替换iframe的url
