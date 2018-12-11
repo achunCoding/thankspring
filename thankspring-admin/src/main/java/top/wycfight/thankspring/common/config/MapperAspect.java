@@ -3,6 +3,7 @@ package top.wycfight.thankspring.common.config;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
@@ -41,6 +42,7 @@ public class MapperAspect {
      * @return
      * @throws Throwable
      */
+    @Around("pointCutMethod()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         long begin = System.nanoTime();
         Object obj = pjp.proceed();

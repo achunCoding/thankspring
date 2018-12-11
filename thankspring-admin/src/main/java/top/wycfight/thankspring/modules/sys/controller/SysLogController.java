@@ -28,9 +28,8 @@ public class SysLogController {
     @RequestMapping("/list")
     @RequiresPermissions("sys:log:list")
     public ResultData list(@RequestParam Map<String,Object> params) {
-        PageUtils page = null;
-        return null;
-
+        PageUtils page = sysLogService.queryPage(params);
+        return ResultData.ok().put("page",page);
     }
 
 }

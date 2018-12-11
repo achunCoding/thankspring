@@ -1,7 +1,10 @@
 package top.wycfight.thankspring.modules.sys.service;
 
 import com.baomidou.mybatisplus.service.IService;
+import top.wycfight.common.utils.PageUtils;
 import top.wycfight.thankspring.modules.sys.bean.SysLogEntity;
+
+import java.util.Map;
 
 /**
  * @author: wycfight@163.com
@@ -10,4 +13,5 @@ import top.wycfight.thankspring.modules.sys.bean.SysLogEntity;
  * @modified By:
  **/
 public interface SysLogService extends IService<SysLogEntity> {
+    PageUtils queryPage(Map<String,Object> params);
 }
