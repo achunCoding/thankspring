@@ -25,7 +25,6 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper,SysLogEntity> im
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         String key = (String)params.get("key");
-
         Page<SysLogEntity> page = this.selectPage(
                 new Query<SysLogEntity>(params).getPage(),
                 new EntityWrapper<SysLogEntity>().like(StringUtils.isNotBlank(key),"username", key)

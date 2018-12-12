@@ -1,6 +1,7 @@
 package top.wycfight.thankspring.modules.sys.bean;
 
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @create: 2018-11-15 11:17
  * @modified By:
  **/
+@TableName("sys_role_menu")
 public class SysRoleMenuEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @TableId

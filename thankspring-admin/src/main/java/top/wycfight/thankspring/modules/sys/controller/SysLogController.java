@@ -24,7 +24,11 @@ public class SysLogController {
     @Autowired
     private SysLogService sysLogService;
 
-
+    /**
+     * 列表
+     * @param params 请求参数
+     * @return 自定义返回数据
+     */
     @RequestMapping("/list")
     @RequiresPermissions("sys:log:list")
     public ResultData list(@RequestParam Map<String,Object> params) {

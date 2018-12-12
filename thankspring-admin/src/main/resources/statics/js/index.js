@@ -118,7 +118,6 @@ function routerList(router, menuList){
 			routerList(router, menu.list);
 		}else if(menu.type == 1){
 			router.add('#'+menu.url, function() {
-				console.log("haha");
 				var url = window.location.hash;
 				
 				//替换iframe的url

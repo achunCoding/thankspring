@@ -24,12 +24,14 @@ public class SysLoginController {
      *
      * @param username 用户名
      * @param password 密码
-     * @param captcha  验证码
+     * @param geetest_challenge 验证码
+     * @param geetest_seccode 验证码
+     * @param geetest_validate 验证码
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/sys/login", method = RequestMethod.POST)
-    public ResultData login(String username, String password, String captcha) {
+    public ResultData login(String username, String password, String geetest_challenge, String geetest_validate, String  geetest_seccode) {
         // TODO 验证码这块还没有做
         try {
             Subject subject = ShiroUtils.getSubject();

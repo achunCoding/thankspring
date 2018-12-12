@@ -2,6 +2,7 @@ package top.wycfight.thankspring.modules.sys.bean;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @create: 2018-11-15 11:12
  * @modified By:
  **/
+@TableName("sys_menu")
 public class SysMenuEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,6 +32,7 @@ public class SysMenuEntity implements Serializable {
     /**
      * 父菜单名称
      */
+    @TableField(exist=false)
     private String parentName;
 
     /**

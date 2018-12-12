@@ -24,6 +24,8 @@ public class SysLogEntity implements Serializable {
     private String operation;
     /** 请求方法 */
     private String method;
+    /** 请求参数 */
+    private String params;
     /** 执行时长(毫秒) */
     private Long time;
     /** IP地址 */
@@ -163,17 +165,34 @@ public class SysLogEntity implements Serializable {
         this.updateDate = updateDate;
     }
 
+    /**
+     * 获取： 请求参数
+     * @return
+     */
+    public String getParams() {
+        return params;
+    }
+
+    /**
+     * 设置： 请求参数
+     * @param params
+     */
+    public void setParams(String params) {
+        this.params = params;
+    }
+
     @Override
     public String toString() {
         return "SysLogEntity{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", operation='" + operation + '\'' +
-                ", method='" + method + '\'' +
-                ", time=" + time +
-                ", ip='" + ip + '\'' +
-                ", createDate=" + createDate +
-                ", updateDate=" + updateDate +
+                ", 用户名：'" + username + '\'' +
+                ", 用户操作：'" + operation + '\'' +
+                ", 请求方法：'" + method + '\'' +
+                ", 请求参数：'" + params + '\'' +
+                ", 执行时常：" + time +
+                ", ip：'" + ip + '\'' +
+                ", 创建时间：" + createDate +
+                ", 更新时间：" + updateDate +
                 '}';
     }
 }

@@ -5,7 +5,4 @@
     <select id="queryListParentId" resultType="top.wycfight.thankspring.modules.sys.bean.SysMenuEntity">
         SELECT * FROM sys_menu where parent_id = #{parentId} ORDER BY order_num asc
     </select>
-
-
-
 </mapper>
