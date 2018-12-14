@@ -65,8 +65,7 @@ public class SysPageController {
     @RequestMapping("gt/register")
     @ResponseBody
     public String generateCode(HttpServletRequest request) {
-        GeetestLib gtSdk = new GeetestLib(geetestId, geetestKey,
-                newFailBack);
+        GeetestLib gtSdk = new GeetestLib(geetestId, geetestKey, newFailBack);
 
         String resStr = "{}";
 

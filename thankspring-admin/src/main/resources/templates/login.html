@@ -64,7 +64,7 @@
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-                <button type="button" class="btn btn-primary btn-block btn-flat" @click="login" id="submit1">登录</button>
+                <button type="button" class="btn btn-primary btn-block btn-flat" id="submit1">登录</button>
             </div>
             <!-- /.col -->
         </div>
@@ -105,24 +105,8 @@
                 this.src = "captcha.jpg?t=" + $.now();
             },
             login: function (event) {
-                var data = "username=" + vm.username + "&password=" + vm.password + "&geetest_challenge=" + vm.geetest_challenge + "&geetest_validate=" + vm.geetest_validate
-                +"&geetest_seccode=" + vm.geetest_seccode;
-                $.ajax({
-                    type: "POST",
-                    url: "sys/login",
-                    data: data,
-                    dataType: "json",
-                    success: function (result) {
-                        if (result.code === 200) {//登录成功
-                            parent.location.href = 'index.html';
-                        } else {
-                            vm.error = true;
-                            vm.errorMsg = result.msg;
-                            vm.refreshCode();
-                        }
-                    }
-                });
             },
+            // 这块没有优化
             getCode: function() {
                 $.ajax({
                     url: "gt/register?t=" + $.now(), // 加随机数防止缓存
@@ -141,23 +125,54 @@
                             width: "100%"
                             // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
                         }, function (captchaObj) {
-                            var result = captchaObj.getValidate();
-                            console.log(result);
-                            if (!result || result === 'undefined') {
-                                $("#notice1").show();
-                                setTimeout(function () {
-                                    $("#notice1").hide();
-                                }, 2000);
-                            } else {
-                                vm.geetest_challenge = result.geetest_challenge;
-                                vm.geetest_validate = result.geetest_validate;
-                                vm.geetest_seccode = result.geetest_seccode;
-                            }
+                            $("#submit1").click(function (e) {
+                                var result = captchaObj.getValidate();
+                                if (!result || result === 'undefined') {
+                                    vm.error = true;
+                                    vm.errorMsg = "请先完成验证";
+                                    setTimeout(function () {
+                                        vm.error = false;
+
+                                    }, 2000);
+                                } else {
+                                    if (vm.username === '') {
+                                        vm.error = true;
+                                        vm.errorMsg = "请输入用户名";
+                                        return;
+                                    }
+                                    if (vm.password === '') {
+                                        vm.error = true;
+                                        vm.errorMsg = "请输入密码";
+                                        return;
+                                    }
+                                    var data = "username=" + vm.username + "&password=" + vm.password + "&geetestChallenge=" + result.geetest_challenge + "&geetestValidate=" + result.geetest_validate
+                                        +"&geetestSeccode=" + result.geetest_seccode;
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "sys/login",
+                                        data: data,
+                                        dataType: "json",
+                                        success: function (result) {
+                                            if (result.code === 200) {//登录成功
+                                                parent.location.href = 'index.html';
+                                            } else {
+                                                vm.error = true;
+                                                vm.errorMsg = result.msg;
+                                                captchaObj.reset(); // 调用该接口进行重置
+                                            }
+                                        }
+                                    });
+
+                                }
+
+
+                            });
                             // 将验证码加到id为captcha的元素里，同时会有三个input的值用于表单提交
                             captchaObj.appendTo("#captcha1");
                             captchaObj.onReady(function () {
                                 $("#wait1").hide();
                             });
+
                             // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html
                         });
                     }
@@ -168,7 +183,7 @@
         },
         created : function() {
             this.getCode();
-        }
+        },
     });
 </script>
 </body>
