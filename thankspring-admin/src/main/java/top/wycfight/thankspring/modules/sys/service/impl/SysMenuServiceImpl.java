@@ -18,7 +18,7 @@ import java.util.List;
  * @create: 2018-12-07 13:36
  * @modified By:
  **/
-@Service("sysMenuServiceImpl")
+@Service("sysMenuService")
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> implements SysMenuService {
 
     @Autowired

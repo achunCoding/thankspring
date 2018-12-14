@@ -1,5 +1,6 @@
 package top.wycfight.thankspring.modules.sys.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,24 @@ public class SysMenuController extends AbstractController {
         List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(getUserId());
         return ResultData.ok().put("menuList", menuList);
     }
+
+    @RequestMapping("/list")
+    @RequiresPermissions("sys:menu:list")
+    public List<SysMenuEntity> list() {
+        List<SysMenuEntity> menuEntityList = sysMenuService.selectList(null);
+        for (SysMenuEntity sysMenuEntity : menuEntityList) {
+            SysMenuEntity parentSysMenuEntity = sysMenuService.selectById(sysMenuEntity.getParentId());
+            if (parentSysMenuEntity != null) {
+                sysMenuEntity.setParentName(parentSysMenuEntity.getName());
+            }
+        }
+        return menuEntityList;
+    }
+
+
+
+
+
 
 
 }
