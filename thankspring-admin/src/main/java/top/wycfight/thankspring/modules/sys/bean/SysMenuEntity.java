@@ -74,91 +74,178 @@ public class SysMenuEntity implements Serializable {
     @TableField(exist=false)
     private List<?> list;
 
-
+    /**
+     * 获取：菜单ID
+     * @return
+     */
     public Long getMenuId() {
         return menuId;
     }
 
+    /**
+     * 设置：菜单ID
+     * @param menuId
+     */
     public void setMenuId(Long menuId) {
         this.menuId = menuId;
     }
 
+    /**
+     * 获取：父菜单ID
+     * @return
+     */
     public Long getParentId() {
         return parentId;
     }
 
+    /**
+     * 设置：父菜单ID
+     * @param parentId
+     */
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
+    /**
+     * 获取：父菜单名称
+     * @return
+     */
     public String getParentName() {
         return parentName;
     }
 
+    /**
+     * 设置：父菜单名称
+     * @param parentName
+     */
     public void setParentName(String parentName) {
         this.parentName = parentName;
     }
 
+    /**
+     * 获取：菜单名称
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * 设置：菜单名称
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * 获取：菜单URL
+     * @return
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * 设置：菜单URL
+     * @param url
+     */
     public void setUrl(String url) {
         this.url = url;
     }
 
+    /**
+     * 获取：菜单权限
+     * @return
+     */
     public String getPerms() {
         return perms;
     }
 
+    /**
+     * 设置：菜单权限
+     * @param perms
+     */
     public void setPerms(String perms) {
         this.perms = perms;
     }
 
+    /**
+     * 获取：菜单类型
+     * @return
+     */
     public Integer getType() {
         return type;
     }
 
+    /**
+     * 设置：菜单类型
+     * @param type
+     */
     public void setType(Integer type) {
         this.type = type;
     }
 
+    /**
+     * 获取：菜单图标
+     * @return
+     */
     public String getIcon() {
         return icon;
     }
 
+    /**
+     * 设置：菜单图标
+     * @param icon
+     */
     public void setIcon(String icon) {
         this.icon = icon;
     }
 
+    /**
+     * 获取：菜单排序
+     * @return
+     */
     public Integer getOrderNum() {
         return orderNum;
     }
 
+    /**
+     * 设置：菜单排序
+     * @param orderNum
+     */
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
     }
 
+    /**
+     * 获取：ztree属性
+     * @return
+     */
     public Boolean getOpen() {
         return open;
     }
 
+    /**
+     * 设置： ztree属性
+     * @param open
+     */
     public void setOpen(Boolean open) {
         this.open = open;
     }
 
+    /**
+     * 获取： ztree属性
+     * @return
+     */
     public List<?> getList() {
         return list;
     }
 
+    /**
+     * 设置：ztree属性
+     * @param list
+     */
     public void setList(List<?> list) {
         this.list = list;
     }
@@ -166,15 +253,15 @@ public class SysMenuEntity implements Serializable {
     @Override
     public String toString() {
         return "SysMenuEntity{" +
-                "menuId=" + menuId +
-                ", parentId=" + parentId +
-                ", parentName='" + parentName + '\'' +
-                ", name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                ", perms='" + perms + '\'' +
-                ", type=" + type +
-                ", icon='" + icon + '\'' +
-                ", orderNum=" + orderNum +
+                "菜单ID：" + menuId +
+                ",父菜单ID：" + parentId +
+                ", 父菜单名称：" + parentName + '\'' +
+                ", 菜单名称：" + name + '\'' +
+                ", 菜单URL：" + url + '\'' +
+                ", 菜单权限：" + perms + '\'' +
+                ", 菜单类型：" + type +
+                ", 菜单图标：" + icon + '\'' +
+                ", 菜单排序：" + orderNum +
                 '}';
     }
 }

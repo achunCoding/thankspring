@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import top.wycfight.common.exception.RRException;
+import top.wycfight.common.exception.GlobalException;
 
 /**
  * @author: wycfight@163.com
@@ -33,7 +33,7 @@ public class RedisAspect {
                 result = point.proceed();
             }catch (Exception e){
                 logger.error("redis error", e);
-                throw new RRException("Redis服务异常");
+                throw new GlobalException("Redis服务异常");
             }
         }
         return result;

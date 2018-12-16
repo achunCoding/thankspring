@@ -22,6 +22,7 @@ public class SysRoleController extends AbstractController {
 
     @Autowired
     private SysRoleService sysRoleService;
+
     @RequestMapping("/select")
     @RequiresPermissions("sys:role:select")
     public ResultData list() {

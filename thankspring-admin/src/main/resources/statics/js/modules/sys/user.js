@@ -62,6 +62,7 @@ var vm = new Vue({
         q:{
             username: null
         },
+        showPassword:null,
         showList: true,
         title:null,
         roleList:{},
@@ -81,10 +82,10 @@ var vm = new Vue({
             vm.title = "新增";
             vm.roleList = {};
             vm.user = {deptName:null, deptId:null, status:1, roleIdList:[]};
-
+            vm.showPassword = true;
             //获取角色信息
             this.getRoleList();
-
+            // 获取部门信息
             vm.getDept();
         },
         getDept: function(){
@@ -144,7 +145,7 @@ var vm = new Vue({
                 contentType: "application/json",
                 data: JSON.stringify(vm.user),
                 success: function(r){
-                    if(r.code === 0){
+                    if(r.code === 200){
                         alert('操作成功', function(){
                             vm.reload();
                         });
@@ -157,7 +158,7 @@ var vm = new Vue({
         getUser: function(userId){
             $.get(baseURL + "sys/user/info/"+userId, function(r){
                 vm.user = r.user;
-                vm.user.password = null;
+                vm.showPassword = false;
 
                 vm.getDept();
             });

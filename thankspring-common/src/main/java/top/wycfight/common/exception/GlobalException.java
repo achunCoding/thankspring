@@ -6,46 +6,62 @@ package top.wycfight.common.exception;
  * @create: 2018-11-09 16:45
  * @modified By:
  **/
-public class RRException extends RuntimeException {
+public class GlobalException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     private String msg;
     private int code = 500;
 
-    public RRException(String msg) {
+    public GlobalException(String msg) {
         super(msg);
         this.msg = msg;
     }
 
-    public RRException(String msg, Throwable e) {
+    public GlobalException(String msg, Throwable e) {
         super(msg, e);
         this.msg = msg;
     }
 
-    public RRException(String msg, int code) {
+    public GlobalException(String msg, int code) {
         super(msg);
         this.msg = msg;
         this.code = code;
     }
 
-    public RRException(String msg, int code, Throwable e) {
+    public GlobalException(String msg, int code, Throwable e) {
         super(msg, e);
         this.msg = msg;
         this.code = code;
     }
 
+    /**
+     * 获取：提示信息
+     * @return
+     */
     public String getMsg() {
         return msg;
     }
 
+    /**
+     * 设置：提示信息
+     * @param msg
+     */
     public void setMsg(String msg) {
         this.msg = msg;
     }
 
+    /**
+     * 获取：code
+     * @return
+     */
     public int getCode() {
         return code;
     }
 
+    /**
+     * 设置：code
+     * @param code
+     */
     public void setCode(int code) {
         this.code = code;
     }

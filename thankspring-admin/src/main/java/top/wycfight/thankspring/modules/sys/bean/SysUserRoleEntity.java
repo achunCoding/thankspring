@@ -28,26 +28,50 @@ public class SysUserRoleEntity implements Serializable {
      */
     private Long roleId;
 
+    /**
+     * ID
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * ID
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * 获取：用户ID
+     * @return
+     */
     public Long getUserId() {
         return userId;
     }
 
+    /**
+     * 设置：用户ID
+     * @param userId
+     */
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
+    /**
+     * 获取：角色ID
+     * @return
+     */
     public Long getRoleId() {
         return roleId;
     }
 
+    /**
+     * 设置：角色ID
+     * @param roleId
+     */
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
@@ -56,8 +80,8 @@ public class SysUserRoleEntity implements Serializable {
     public String toString() {
         return "SysUserRoleEntity{" +
                 "id=" + id +
-                ", userId=" + userId +
-                ", roleId=" + roleId +
+                ", 用户ID：" + userId +
+                ", 角色ID：" + roleId +
                 '}';
     }
 }

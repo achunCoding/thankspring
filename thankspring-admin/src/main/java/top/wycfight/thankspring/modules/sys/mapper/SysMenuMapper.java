@@ -20,5 +20,9 @@ public interface SysMenuMapper extends BaseMapper<SysMenuEntity> {
      */
     List<SysMenuEntity> queryListParentId(Long parentId);
 
+    /**
+     * 查询没有Button的List列表
+     * @return
+     */
     List<SysMenuEntity> queryNotButtonList();
 }

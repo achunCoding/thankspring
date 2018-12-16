@@ -3,8 +3,11 @@ package top.wycfight.thankspring.modules.sys.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.wycfight.common.utils.PageUtils;
 import top.wycfight.thankspring.common.utils.Constant;
 import top.wycfight.thankspring.common.utils.Query;
@@ -14,7 +17,9 @@ import top.wycfight.thankspring.modules.sys.mapper.SysMenuMapper;
 import top.wycfight.thankspring.modules.sys.mapper.SysUserMapper;
 import top.wycfight.thankspring.modules.sys.service.SysMenuService;
 import top.wycfight.thankspring.modules.sys.service.SysUserService;
+import top.wycfight.thankspring.modules.sys.shiro.ShiroUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,16 +34,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUserEntity>
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        String username = (String) params.get("username");
+        String username = (String)params.get("username");
+
         Page<SysUserEntity> page = this.selectPage(
-        new Query<SysUserEntity>(params).getPage(),
-        new EntityWrapper<SysUserEntity>()
-                .like(StringUtils.isBlank(username),"username",username)
-                .addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String) params.get(Constant.SQL_FILTER))
+                new Query<SysUserEntity>(params).getPage(),
+                new EntityWrapper<SysUserEntity>()
+                        .like(StringUtils.isNotBlank(username),"username", username)
+                        .addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
         );
-        for (SysUserEntity sysUserEntity : page.getRecords()) {
-            
-        }
+
         return new PageUtils(page);
 
     }
@@ -49,7 +53,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUserEntity>
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void save(SysUserEntity user) {
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        String salt = RandomStringUtils.randomAlphanumeric(20);
+        user.setSalt(salt);
+        user.setPassword(ShiroUtils.sha256(user.getPassword(),user.getSalt()));
+        this.insert(user);
+        //TODO 保存用户和角色之间的关系
+
 
     }
 

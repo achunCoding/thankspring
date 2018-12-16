@@ -14,15 +14,23 @@ import java.util.Map;
  * @modify By:
  **/
 public interface  SysUserService extends IService<SysUserEntity> {
+    /**
+     * 分页查询所有记录
+     * @param params
+     * @return
+     */
     PageUtils queryPage(Map<String, Object> params);
 
     /**
-     * 查询用户的所有菜单ID
+     * 查询用户下的所有菜单
+     * @param userId 用户ID
+     * @return
      */
     List<Long> queryAllMenuId(Long userId);
 
     /**
      * 保存用户
+     * @param user 用户对象
      */
     void save(SysUserEntity user);
 

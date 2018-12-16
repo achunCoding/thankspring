@@ -40,7 +40,6 @@ $(function () {
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
-    console.log(baseURL + 'sys/log/list');
 });
 
 var vm = new Vue({

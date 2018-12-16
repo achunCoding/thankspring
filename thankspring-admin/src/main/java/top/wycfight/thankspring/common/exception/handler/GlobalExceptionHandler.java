@@ -1,12 +1,14 @@
 package top.wycfight.thankspring.common.exception.handler;
 
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.apache.shiro.authz.AuthorizationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import top.wycfight.thankspring.common.result.ErrorInfo;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import top.wycfight.common.exception.GlobalException;
+import top.wycfight.common.utils.ResultData;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author: wycfight@163.com
@@ -14,28 +16,37 @@ import javax.servlet.http.HttpServletRequest;
  * @create: 2018-11-19 09:55
  * @modified By:
  **/
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    public static final String DEFAULT_ERROR_VIEW = "error";
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
-//    @ExceptionHandler(value = Exception.class)
-//    @ResponseBody
-//    public ErrorInfo<String>  defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-//        ErrorInfo<String> r = new ErrorInfo<>();
-//        r.setMessage(e.getMessage());
-//        r.setCode(ErrorInfo.ERROR);
-//        r.setData("Some Data");
-//        r.setUrl(req.getRequestURL().toString());
-//        return r;
-//    }
+    /**
+     * 处理自定义异常
+     */
+    @ExceptionHandler(GlobalException.class)
+    public ResultData handleRRException(GlobalException e){
+        ResultData resultData = new ResultData();
+        resultData.put("code", e.getCode());
+        resultData.put("msg", e.getMessage());
+        return resultData;
+    }
 
-    @ExceptionHandler(value = Exception.class)
-    public ModelAndView defaultErrorHandler01(HttpServletRequest req, Exception e) {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("exception", e);
-        mav.addObject("url", req.getRequestURL());
-        mav.setViewName(DEFAULT_ERROR_VIEW);
-        return mav;
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResultData handleDuplicateKeyException(DuplicateKeyException e){
+        logger.error(e.getMessage(), e);
+        return ResultData.error("数据库中已存在该记录");
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResultData handleAuthorizationException(AuthorizationException e){
+        logger.error(e.getMessage(), e);
+        return ResultData.error("没有权限，请联系管理员授权");
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResultData handleException(Exception e){
+        logger.error(e.getMessage(), e);
+        return ResultData.error();
     }
 }

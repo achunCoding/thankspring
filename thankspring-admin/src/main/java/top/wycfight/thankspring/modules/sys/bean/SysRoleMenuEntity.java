@@ -27,27 +27,50 @@ public class SysRoleMenuEntity implements Serializable {
      */
     private Long menuId;
 
-
+    /**
+     * 设置：ID
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * 获取：ID
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * 获取：角色ID
+     * @return
+     */
     public Long getRoleId() {
         return roleId;
     }
 
+    /**
+     * 设置：角色ID
+     * @param roleId
+     */
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 
+    /**
+     * 获取：菜单ID
+     * @return
+     */
     public Long getMenuId() {
         return menuId;
     }
 
+    /**
+     * 设置：菜单ID
+     * @param menuId
+     */
     public void setMenuId(Long menuId) {
         this.menuId = menuId;
     }
@@ -56,8 +79,8 @@ public class SysRoleMenuEntity implements Serializable {
     public String toString() {
         return "SysRoleMenuEntity{" +
                 "id=" + id +
-                ", roleId=" + roleId +
-                ", menuId=" + menuId +
+                ", 角色ID：" + roleId +
+                ", 菜单ID" + menuId +
                 '}';
     }
 }

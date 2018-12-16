@@ -4,7 +4,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import top.wycfight.common.exception.RRException;
+import top.wycfight.common.exception.GlobalException;
 import top.wycfight.thankspring.modules.sys.bean.SysUserEntity;
 
 /**
@@ -103,7 +103,7 @@ public class ShiroUtils {
     public static String getKaptcha(String key) {
         Object kaptcha = getSessionAttribute(key);
         if(kaptcha == null){
-            throw new RRException("验证码已失效");
+            throw new GlobalException("验证码已失效");
         }
         getSession().removeAttribute(key);
         return kaptcha.toString();

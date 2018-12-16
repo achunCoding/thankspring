@@ -93,7 +93,7 @@ public class SysUserEntity implements Serializable {
     /**
      * 部门ID
      */
-    @NotNull(message = "部门不能为空", groups = {AddGroup.class, UpdateGroup.class})
+//    @NotNull(message = "部门不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private Long deptId;
 
     /**
@@ -103,7 +103,7 @@ public class SysUserEntity implements Serializable {
     private String deptName;
 
     /**
-     * 设置：
+     * 设置：用户ID
      *
      * @param userId
      */
@@ -112,7 +112,7 @@ public class SysUserEntity implements Serializable {
     }
 
     /**
-     * 获取：
+     * 获取：用户ID
      *
      * @return Long
      */
@@ -244,34 +244,66 @@ public class SysUserEntity implements Serializable {
         this.updateTime = updateTime;
     }
 
+    /**
+     * 获取：角色ID列表
+     * @return
+     */
     public List<Long> getRoleIdList() {
         return roleIdList;
     }
 
+    /**
+     * 设置：角色ID列表
+     * @param roleIdList
+     */
     public void setRoleIdList(List<Long> roleIdList) {
         this.roleIdList = roleIdList;
     }
 
+    /**
+     * 获取：盐
+     * @return
+     */
     public String getSalt() {
         return salt;
     }
 
+    /**
+     * 设置：盐
+     * @param salt
+     */
     public void setSalt(String salt) {
         this.salt = salt;
     }
 
+    /**
+     * 获取：部门ID
+     * @return
+     */
     public Long getDeptId() {
         return deptId;
     }
 
+    /**
+     * 设置：部门ID
+     * @param deptId
+     */
     public void setDeptId(Long deptId) {
         this.deptId = deptId;
     }
 
+    /**
+     * 获取：部门名称
+     * @return
+     */
     public String getDeptName() {
         return deptName;
     }
 
+    /**
+     * 设置：部门名称
+     * @param deptName
+     */
     public void setDeptName(String deptName) {
         this.deptName = deptName;
     }
@@ -279,17 +311,17 @@ public class SysUserEntity implements Serializable {
     @Override
     public String toString() {
         return "SysUserEntity{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
-                ", email='" + email + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", status=" + status +
-                ", roleIdList=" + roleIdList +
-                ", createTime=" + createTime +
-                ", deptId=" + deptId +
-                ", deptName='" + deptName + '\'' +
+                "用户ID：" + userId +
+                ", 用户名：" + username + '\'' +
+                ", 密码：" + password + '\'' +
+                ", 盐：" + salt + '\'' +
+                ", 邮箱：" + email + '\'' +
+                ", 手机：" + mobile + '\'' +
+                ", 状态：" + status +
+                ", 角色列表：" + roleIdList +
+                ", 创建时间：" + createTime +
+                ", 部门ID：" + deptId +
+                ", 部门名称：" + deptName + '\'' +
                 '}';
     }
 }

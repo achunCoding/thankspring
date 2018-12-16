@@ -1,7 +1,7 @@
 package top.wycfight.common.xss;
 
 import org.apache.commons.lang.StringUtils;
-import top.wycfight.common.exception.RRException;
+import top.wycfight.common.exception.GlobalException;
 
 /**
  * @author: wycfight@163.com
@@ -33,7 +33,7 @@ public class SQLFilter {
         //判断是否包含非法字符
         for(String keyword : keywords){
             if(str.indexOf(keyword) != -1){
-                throw new RRException("包含非法字符");
+                throw new GlobalException("包含非法字符");
             }
         }
         return str;
