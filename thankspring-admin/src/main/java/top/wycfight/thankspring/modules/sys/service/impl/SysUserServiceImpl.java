@@ -19,6 +19,7 @@ import top.wycfight.thankspring.modules.sys.service.SysMenuService;
 import top.wycfight.thankspring.modules.sys.service.SysUserService;
 import top.wycfight.thankspring.modules.sys.shiro.ShiroUtils;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -62,12 +63,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUserEntity>
         user.setPassword(ShiroUtils.sha256(user.getPassword(),user.getSalt()));
         this.insert(user);
         //TODO 保存用户和角色之间的关系
-
-
     }
 
+
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(SysUserEntity user) {
+        user.setUpdateTime(new Date());
+        this.updateById(user);
+        //TODO 保存用户和角色之间的关系
+
+
 
     }
 

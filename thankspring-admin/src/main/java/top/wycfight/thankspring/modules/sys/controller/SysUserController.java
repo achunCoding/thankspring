@@ -1,6 +1,6 @@
 package top.wycfight.thankspring.modules.sys.controller;
 
-import com.carrotsearch.hppc.RandomizedHashOrderMixer;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,15 +8,14 @@ import top.wycfight.common.utils.PageUtils;
 import top.wycfight.common.utils.ResultData;
 import top.wycfight.common.validator.ValidatorUtils;
 import top.wycfight.common.validator.group.AddGroup;
+import top.wycfight.common.validator.group.UpdateGroup;
 import top.wycfight.thankspring.common.annotation.SysLog;
 import top.wycfight.thankspring.modules.sys.bean.SysUserEntity;
-import top.wycfight.thankspring.modules.sys.service.SysRoleService;
+import org.apache.commons.lang.ArrayUtils;
 import top.wycfight.thankspring.modules.sys.service.SysUserRoleService;
 import top.wycfight.thankspring.modules.sys.service.SysUserService;
-import top.wycfight.thankspring.modules.sys.shiro.ShiroUtils;
 
-import javax.xml.transform.Result;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +61,25 @@ public class SysUserController extends AbstractController {
     @SysLog("更新用户")
     @RequestMapping("/update")
     @RequiresPermissions("sys:user:update")
-    public ResultData update() {
+    public ResultData update(@RequestBody SysUserEntity sysUserEntity) {
+        ValidatorUtils.validateEntity(sysUserEntity,UpdateGroup.class);
+        sysUserService.update(sysUserEntity);
+        return ResultData.ok();
+    }
+
+    @SysLog("删除用户")
+    @RequestMapping("/delete")
+    @RequiresPermissions("sys:user:delete")
+    public ResultData delete(@RequestBody Long[] userIds) {
+        if(ArrayUtils.contains(userIds, 1L)){
+            return ResultData.error("系统管理员不能删除");
+        }
+
+        if(ArrayUtils.contains(userIds, getUserId())){
+            return ResultData.error("当前用户不能删除");
+        }
+
+        sysUserService.deleteBatchIds(Arrays.asList(userIds));
         return ResultData.ok();
     }
 
@@ -79,7 +96,7 @@ public class SysUserController extends AbstractController {
         List<Long> roleIdList =  sysUserRoleService.queryRoleIdList(userId);
         sysUserEntity.setRoleIdList(roleIdList);
         return ResultData.ok().put("user",sysUserEntity);
-        }
+    }
 
 
 

@@ -2,6 +2,16 @@
 $.jgrid.defaults.width = 1000;
 $.jgrid.defaults.responsive = true;
 $.jgrid.defaults.styleUI = 'Bootstrap';
+//设置toastr属性为在右下显示，时间1.5s
+$(document).ready(function () {
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        positionClass: "toast-bottom-right",
+        timeOut: "2000",
+
+    };
+});
 
 var baseURL = "../../";
 
@@ -50,13 +60,13 @@ function getSelectedRow() {
     var grid = $("#jqGrid");
     var rowKey = grid.getGridParam("selrow");
     if(!rowKey){
-    	alert("请选择一条记录");
+        toastr.warning("请选择一条记录!");
     	return ;
     }
     
     var selectedIDs = grid.getGridParam("selarrrow");
     if(selectedIDs.length > 1){
-    	alert("只能选择一条记录");
+        toastr.error("只能选择一条记录!");
     	return ;
     }
     
@@ -68,7 +78,7 @@ function getSelectedRows() {
     var grid = $("#jqGrid");
     var rowKey = grid.getGridParam("selrow");
     if(!rowKey){
-    	alert("请选择一条记录");
+        toastr.warning("请选择一条记录!");
     	return ;
     }
     

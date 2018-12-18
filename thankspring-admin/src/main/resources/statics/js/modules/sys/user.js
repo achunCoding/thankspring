@@ -1,4 +1,11 @@
 $(function () {
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        positionClass: "toast-bottom-right",
+        timeOut: "2000",
+
+    };
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/user/list',
         datatype: "json",
@@ -95,7 +102,6 @@ var vm = new Vue({
                 var node = ztree.getNodeByParam("deptId", vm.user.deptId);
                 if(node != null){
                     ztree.selectNode(node);
-
                     vm.user.deptName = node.name;
                 }
             })
@@ -119,19 +125,23 @@ var vm = new Vue({
                 return ;
             }
 
-            confirm('确定要删除选中的记录？', function(){
+            layer.confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
                     url: baseURL + "sys/user/delete",
                     contentType: "application/json",
                     data: JSON.stringify(userIds),
                     success: function(r){
-                        if(r.code == 0){
-                            alert('操作成功', function(){
+                        if(r.code == 200){
+                            toastr.success("删除成功!",function(){
+                                layer.closeAll("dialog");
                                 vm.reload();
                             });
+
                         }else{
-                            alert(r.msg);
+                            layer.closeAll("dialog");
+                            toastr.error(r.msg);
+
                         }
                     }
                 });
@@ -146,11 +156,11 @@ var vm = new Vue({
                 data: JSON.stringify(vm.user),
                 success: function(r){
                     if(r.code === 200){
-                        alert('操作成功', function(){
+                        toastr.success("操作成功!",function(){
                             vm.reload();
                         });
                     }else{
-                        alert(r.msg);
+                        toastr.error(r.msg);
                     }
                 }
             });

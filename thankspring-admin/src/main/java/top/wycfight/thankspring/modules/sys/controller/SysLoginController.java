@@ -68,11 +68,14 @@ public class SysLoginController {
     }
 
 
-
+    /**
+     * 退出登陆系统
+     * @return
+     */
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout() {
         ShiroUtils.logout();
-        return "redirect: login.html";
+        return "redirect:login.html";
     }
 
 
@@ -114,6 +117,5 @@ public class SysLoginController {
         }
         return result;
     }
-
 
 }
