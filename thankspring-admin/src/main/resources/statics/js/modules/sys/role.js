@@ -203,11 +203,12 @@ var vm = new Vue({
                 data: JSON.stringify(vm.role),
                 success: function(r){
                     if(r.code === 0){
-                        alert('操作成功', function(){
+                        toastr.success("操作成功!",function(){
+                            layer.closeAll("dialog");
                             vm.reload();
                         });
                     }else{
-                        alert(r.msg);
+                        toastr.error(r.msg);
                     }
                 }
             });
@@ -239,7 +240,6 @@ var vm = new Vue({
                 var node = dept_ztree.getNodeByParam("deptId", vm.role.deptId);
                 if(node != null){
                     dept_ztree.selectNode(node);
-
                     vm.role.deptName = node.name;
                 }
             })

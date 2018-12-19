@@ -1,4 +1,5 @@
 var setting = {
+
     data: {
         simpleData: {
             enable: true,
@@ -29,9 +30,10 @@ var vm = new Vue({
             //加载部门树
             $.get(baseURL + "sys/dept/select", function(r){
                 ztree = $.fn.zTree.init($("#deptTree"), setting, r.deptList);
+                // 根据节点数据的属性精确搜索满足条件的的 JSON 数据对象,如果有多个同样属性值的节点，则只返回第一个找到的节点。
                 var node = ztree.getNodeByParam("deptId", vm.dept.parentId);
+                // 选中某个节点。
                 ztree.selectNode(node);
-
                 vm.dept.parentName = node.name;
             })
         },
@@ -61,18 +63,19 @@ var vm = new Vue({
                 return ;
             }
 
-            confirm('确定要删除选中的记录？', function(){
+            layer.confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
                     url: baseURL + "sys/dept/delete",
                     data: "deptId=" + deptId,
                     success: function(r){
-                        if(r.code === 0){
-                            alert('操作成功', function(){
+                        if(r.code === 200){
+                            toastr.success("删除成功!",function(){
+                                layer.closeAll("dialog");
                                 vm.reload();
                             });
                         }else{
-                            alert(r.msg);
+                            toastr.error(r.msg);
                         }
                     }
                 });
@@ -86,12 +89,13 @@ var vm = new Vue({
                 contentType: "application/json",
                 data: JSON.stringify(vm.dept),
                 success: function(r){
-                    if(r.code === 0){
-                        alert('操作成功', function(){
+                    if(r.code === 200){
+                        toastr.success("操作成功!",function(){
+                            layer.closeAll("dialog");
                             vm.reload();
                         });
                     }else{
-                        alert(r.msg);
+                        toastr.error(r.msg);
                     }
                 }
             });
@@ -108,6 +112,7 @@ var vm = new Vue({
                 content: jQuery("#deptLayer"),
                 btn: ['确定', '取消'],
                 btn1: function (index) {
+                    // 得到选中节点集合
                     var node = ztree.getSelectedNodes();
                     //选择上级部门
                     vm.dept.parentId = node[0].deptId;
@@ -147,7 +152,7 @@ Dept.initColumn = function () {
 function getDeptId () {
     var selected = $('#deptTable').bootstrapTreeTable('getSelections');
     if (selected.length == 0) {
-        alert("请选择一条记录");
+        toastr.error("请选择一条记录");
         return null;
     } else {
         return selected[0].id;
@@ -156,14 +161,23 @@ function getDeptId () {
 
 
 $(function () {
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        positionClass: "toast-bottom-right",
+        timeOut: "2000",
+
+    };
     $.get(baseURL + "sys/dept/info", function(r){
         var colunms = Dept.initColumn();
         var table = new TreeTable(Dept.id, baseURL + "sys/dept/list", colunms);
         table.setRootCodeValue(r.deptId);
+        // 在那一列上面显示展开按钮
         table.setExpandColumn(2);
         table.setIdField("deptId");
         table.setCodeField("deptId");
         table.setParentCodeField("parentId");
+        // 是否全部展开
         table.setExpandAll(false);
         table.init();
         Dept.table = table;

@@ -38,7 +38,6 @@ public class SysRoleEntity implements Serializable {
      */
     private String remark;
 
-
     /**
      * 部门ID
      */

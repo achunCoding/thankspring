@@ -4,8 +4,13 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import top.wycfight.common.validator.group.AddGroup;
+import top.wycfight.common.validator.group.UpdateGroup;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +29,7 @@ public class SysDeptEntity implements Serializable {
     /** 上级部门ID，一级部门为0 */
     private Long parentId;
     /** 部门名称 */
+    @NotBlank(message = "部门名称不能为空",groups = {AddGroup.class,UpdateGroup.class})
     private String name;
     @TableField(exist = false)
     private String parentName;
@@ -40,6 +46,16 @@ public class SysDeptEntity implements Serializable {
     private Boolean open;
     @TableField(exist=false)
     private List<?> list;
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
+    /**
+     * 更新时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date updateTime;
 
     /**
      * 获取：部门ID
@@ -167,5 +183,37 @@ public class SysDeptEntity implements Serializable {
      */
     public void setList(List<?> list) {
         this.list = list;
+    }
+
+    /**
+     * 获取：创建时间
+     * @return
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * 设置：创建时间
+     * @param createTime
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * 获取：更新时间
+     * @return
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * 设置：更新时间
+     * @param updateTime
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

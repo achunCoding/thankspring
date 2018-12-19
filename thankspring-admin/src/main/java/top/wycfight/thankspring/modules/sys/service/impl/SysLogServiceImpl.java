@@ -29,7 +29,6 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper,SysLogEntity> im
                 new Query<SysLogEntity>(params).getPage(),
                 new EntityWrapper<SysLogEntity>().like(StringUtils.isNotBlank(key),"username", key)
         );
-
         return new PageUtils(page);
     }
 }
