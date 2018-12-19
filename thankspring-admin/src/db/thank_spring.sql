@@ -10,10 +10,32 @@ Target Server Type    : MYSQL
 Target Server Version : 50559
 File Encoding         : 65001
 
-Date: 2018-12-19 10:15:54
+Date: 2018-12-19 17:23:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for sys_dept
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_dept`;
+CREATE TABLE `sys_dept` (
+  `dept_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '上级部门ID，一级部门为0',
+  `name` varchar(50) DEFAULT NULL COMMENT '部门名称',
+  `order_num` int(11) DEFAULT NULL COMMENT '排序',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`dept_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='部门管理';
+
+-- ----------------------------
+-- Records of sys_dept
+-- ----------------------------
+INSERT INTO `sys_dept` VALUES ('1', '0', '春纯蠢唇', '0', '0', null, null);
+INSERT INTO `sys_dept` VALUES ('2', '1', '你说啥呢', '1', '0', '2018-12-19 14:18:54', '2018-12-19 14:18:54');
+INSERT INTO `sys_dept` VALUES ('3', '1', '111', '1', '-1', '2018-12-19 14:30:54', '2018-12-19 14:42:02');
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -30,7 +52,7 @@ CREATE TABLE `sys_log` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='系统日志';
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='系统日志';
 
 -- ----------------------------
 -- Records of sys_log
@@ -61,6 +83,10 @@ INSERT INTO `sys_log` VALUES ('23', 'admin', '删除用户', 'top.wycfight.thank
 INSERT INTO `sys_log` VALUES ('24', 'admin', '删除用户', 'top.wycfight.thankspring.modules.sys.controller.SysUserController,delete()', '[1]', '0', '0:0:0:0:0:0:0:1', '2018-12-18 15:00:28', '2018-12-18 15:00:28');
 INSERT INTO `sys_log` VALUES ('25', 'admin', '保存用户', 'top.wycfight.thankspring.modules.sys.controller.SysUserController,save()', '{\"userId\":2,\"username\":\"1111\",\"password\":\"4918ff00083cd60d824f02e34666b7b3b793d9f1b6e798f737c2b4596d4f59bd\",\"salt\":\"9xIIwqDONOe3uXE415i4\",\"email\":\"111@qq.com\",\"mobile\":\"17865913036\",\"status\":1,\"roleIdList\":[],\"createTime\":\"Dec 19, 2018 9:35:55 AM\",\"updateTime\":\"Dec 19, 2018 9:35:55 AM\"}', '22', '0:0:0:0:0:0:0:1', '2018-12-19 09:35:55', '2018-12-19 09:35:55');
 INSERT INTO `sys_log` VALUES ('26', 'admin', '删除用户', 'top.wycfight.thankspring.modules.sys.controller.SysUserController,delete()', '[2]', '19', '0:0:0:0:0:0:0:1', '2018-12-19 09:53:19', '2018-12-19 09:53:19');
+INSERT INTO `sys_log` VALUES ('27', 'admin', '添加部门', 'top.wycfight.thankspring.modules.sys.controller.SysDeptController,save()', '{\"deptId\":1,\"parentId\":0,\"name\":\"春纯蠢唇\",\"parentName\":\"一级部门\",\"orderNum\":0}', '90', '0:0:0:0:0:0:0:1', '2018-12-19 14:15:41', '2018-12-19 14:15:41');
+INSERT INTO `sys_log` VALUES ('28', 'admin', '添加部门', 'top.wycfight.thankspring.modules.sys.controller.SysDeptController,save()', '{\"deptId\":2,\"parentId\":1,\"name\":\"你说啥呢\",\"parentName\":\"春纯蠢唇\",\"orderNum\":1,\"createTime\":\"Dec 19, 2018 2:18:54 PM\",\"updateTime\":\"Dec 19, 2018 2:18:54 PM\"}', '79', '0:0:0:0:0:0:0:1', '2018-12-19 14:18:54', '2018-12-19 14:18:54');
+INSERT INTO `sys_log` VALUES ('29', 'admin', '添加部门', 'top.wycfight.thankspring.modules.sys.controller.SysDeptController,save()', '{\"deptId\":3,\"parentId\":2,\"name\":\"hahahah\",\"parentName\":\"你说啥呢\",\"orderNum\":1,\"createTime\":\"Dec 19, 2018 2:30:54 PM\",\"updateTime\":\"Dec 19, 2018 2:30:54 PM\"}', '75', '0:0:0:0:0:0:0:1', '2018-12-19 14:30:54', '2018-12-19 14:30:54');
+INSERT INTO `sys_log` VALUES ('30', 'admin', '删除部门', 'top.wycfight.thankspring.modules.sys.controller.SysDeptController,delete()', '3', '6853', '0:0:0:0:0:0:0:1', '2018-12-19 15:37:28', '2018-12-19 15:37:28');
 
 -- ----------------------------
 -- Table structure for sys_menu
