@@ -21,7 +21,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = CheckValidator.class)
 @Documented
-public @interface DateCheck {
+public @interface DateValidation {
     //默认错误消息
     String message() default "Please select the correct format date";
     //类型
@@ -37,6 +37,6 @@ public @interface DateCheck {
     @Retention(RUNTIME)
     @Documented
     @interface List {
-        DateCheck[] value();
+        DateValidation[] value();
     }
 }

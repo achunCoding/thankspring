@@ -21,7 +21,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = CheckValidator.class)
 @Documented
-public @interface IdCardCheck {
+public @interface IdCardValidation {
     //默认错误消息
     String message() default "Identity card format error";
     //查询的表名
@@ -36,7 +36,7 @@ public @interface IdCardCheck {
     @Retention(RUNTIME)
     @Documented
     @interface List {
-        IdCardCheck[] value();
+        IdCardValidation[] value();
     }
 
 }

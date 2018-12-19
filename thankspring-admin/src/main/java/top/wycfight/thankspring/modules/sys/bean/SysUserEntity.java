@@ -5,15 +5,12 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.ibatis.annotations.Update;
 import top.wycfight.common.validator.group.AddGroup;
 import top.wycfight.common.validator.group.UpdateGroup;
-import top.wycfight.thankspring.common.validator.check.MobileCheck;
+import top.wycfight.thankspring.common.validator.check.PhoneValidation;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -69,8 +66,7 @@ public class SysUserEntity implements Serializable {
      * 手机号
      */
     @NotBlank(message = "手机号不能为空",groups = {AddGroup.class,UpdateGroup.class})
-    @MobileCheck(message = "请输入正确手机号")
-//    @Pattern(message = "请输入正确手机号",groups = {AddGroup.class,UpdateGroup.class},regexp = "^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$")
+    @PhoneValidation(message = "手机号格式不正确",groups = {AddGroup.class,UpdateGroup.class})
     private String mobile;
 
     /**

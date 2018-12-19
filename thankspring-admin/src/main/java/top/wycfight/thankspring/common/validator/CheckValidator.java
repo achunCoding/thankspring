@@ -2,9 +2,10 @@ package top.wycfight.thankspring.common.validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.wycfight.thankspring.common.validator.check.DateCheck;
-import top.wycfight.thankspring.common.validator.check.IdCardCheck;
-import top.wycfight.thankspring.common.validator.check.MobileCheck;
+import top.wycfight.thankspring.common.validator.check.DateValidation;
+
+import top.wycfight.thankspring.common.validator.check.IdCardValidation;
+import top.wycfight.thankspring.common.validator.check.PhoneValidation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -29,7 +30,6 @@ public class CheckValidator implements ConstraintValidator<Annotation, Object> {
     private static final String TIME_CHECK = "^([0-1]?[0-9]|2[0-3]):([0-5][0-9])";
     private static final String YYYYMMHHDDMI = "^(\\d{4})-(0\\d{1}|1[0-2])-(0\\d{1}|[12]\\d{1}|3[01]) (0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1})$";
     private static final String PHONE_NUMBER_REG = "^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$";
-    private static final String ID_CARD_CHECK = "^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}$";
 
     private String value;
     private int annotationType;
@@ -41,18 +41,18 @@ public class CheckValidator implements ConstraintValidator<Annotation, Object> {
      */
     @Override
     public void initialize(Annotation annotation) {
-        if (annotation instanceof DateCheck) {
+        if (annotation instanceof DateValidation) {
             annotationType = 0;
-            DateCheck dateCheck = (DateCheck) annotation;
+            DateValidation dateCheck = (DateValidation) annotation;
             this.value = dateCheck.type();
         }
-        if (annotation instanceof IdCardCheck) {
+        if (annotation instanceof IdCardValidation) {
             annotationType = 1;
-            IdCardCheck idCardCheck = (IdCardCheck) annotation;
+            IdCardValidation idCardCheck = (IdCardValidation) annotation;
         }
-        if (annotation instanceof MobileCheck) {
+        if (annotation instanceof PhoneValidation) {
             annotationType = 2;
-            MobileCheck moblieCheck = (MobileCheck) annotation;
+            PhoneValidation moblieCheck = (PhoneValidation) annotation;
         }
 
     }
@@ -87,7 +87,6 @@ public class CheckValidator implements ConstraintValidator<Annotation, Object> {
                     break;
                 }
                 case 1: {
-                    re = Pattern.matches(ID_CARD_CHECK,(String)value);
                     break;
                 }
                 case 2: {
