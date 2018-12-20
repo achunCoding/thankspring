@@ -31,21 +31,19 @@ import java.util.Map;
  * @modified By:
  **/
 @Service("sysUserService")
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUserEntity> implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements SysUserService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        String username = (String)params.get("username");
+        String username = (String) params.get("username");
 
         Page<SysUserEntity> page = this.selectPage(
                 new Query<SysUserEntity>(params).getPage(),
                 new EntityWrapper<SysUserEntity>()
-                        .like(StringUtils.isNotBlank(username),"username", username)
-                        .addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
+                        .like(StringUtils.isNotBlank(username), "username", username)
+                        .addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String) params.get(Constant.SQL_FILTER))
         );
-
         return new PageUtils(page);
-
     }
 
     @Override
@@ -60,7 +58,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUserEntity>
         user.setUpdateTime(new Date());
         String salt = RandomStringUtils.randomAlphanumeric(20);
         user.setSalt(salt);
-        user.setPassword(ShiroUtils.sha256(user.getPassword(),user.getSalt()));
+        user.setPassword(ShiroUtils.sha256(user.getPassword(), user.getSalt()));
         this.insert(user);
         //TODO 保存用户和角色之间的关系
     }
@@ -72,7 +70,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUserEntity>
         user.setUpdateTime(new Date());
         this.updateById(user);
         //TODO 保存用户和角色之间的关系
-
 
 
     }

@@ -148,6 +148,9 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function () {
+            if(vm.validator()){
+                return ;
+            }
             var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
             $.ajax({
                 type: "POST",
@@ -206,6 +209,48 @@ var vm = new Vue({
                 postData:{'username': vm.q.username},
                 page:page
             }).trigger("reloadGrid");
+        },
+        validEmail: function (email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        },
+        validPhone: function (phone) {
+            var re = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
+            return re.test(phone);
+        },
+        validator: function() {
+            // 用户名
+            if (isBlank(vm.user.username)) {
+                toastr.warning("用户名不能为空");
+                return true;
+            }
+            // 密码
+            if (isBlank(vm.user.password)) {
+                toastr.warning("密码不能为空");
+                return true;
+            }
+            // 邮箱
+            if (isBlank(vm.user.email)) {
+                toastr.warning("邮箱不能为空");
+                return true;
+            } else if (!this.validEmail(vm.user.email)) {
+                toastr.warning("邮箱格式不正确");
+                return true;
+            }
+            // 手机号
+            if (isBlank(vm.user.mobile)) {
+                toastr.warning("手机号不能为空");
+                return true;
+            } else if (!this.validPhone(vm.user.mobile)) {
+                toastr.warning("请输入正确手机号");
+                return true;
+            }
+            // 部门
+            if (isBlank(vm.user.deptName)) {
+                toastr.warning("部门不能为空");
+                return true;
+            }
         }
+
     }
 });

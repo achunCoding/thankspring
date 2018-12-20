@@ -11,6 +11,7 @@ import top.wycfight.thankspring.common.validator.check.PhoneValidation;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -95,7 +96,7 @@ public class SysUserEntity implements Serializable {
     /**
      * 部门ID
      */
-//    @NotNull(message = "部门不能为空", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "部门不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private Long deptId;
 
     /**

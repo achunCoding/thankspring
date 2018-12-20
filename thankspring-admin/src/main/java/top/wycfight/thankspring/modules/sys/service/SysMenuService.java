@@ -34,7 +34,17 @@ public interface SysMenuService extends IService<SysMenuEntity> {
      */
     List<SysMenuEntity> queryListParentId(Long parentId);
 
+    /**
+     * 查询没有按钮菜单列表
+     * @return
+     */
+    List<SysMenuEntity> queryNotButtonList();
 
+    /**
+     * 保存菜单列表
+     * @param sysMenuEntity 菜单
+     */
+    void save(SysMenuEntity sysMenuEntity);
 
 
 }

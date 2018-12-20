@@ -1,8 +1,10 @@
 package top.wycfight.thankspring.modules.sys.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.wycfight.thankspring.common.utils.Constant;
 import top.wycfight.thankspring.modules.sys.bean.SysMenuEntity;
 import top.wycfight.thankspring.modules.sys.mapper.SysMenuMapper;
@@ -54,6 +56,17 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     @Override
     public List<SysMenuEntity> queryListParentId(Long parentId) {
         return baseMapper.queryListParentId(parentId);
+    }
+
+    @Override
+    public List<SysMenuEntity> queryNotButtonList() {
+        return baseMapper.queryNotButtonList();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void save(SysMenuEntity sysMenuEntity) {
+        this.insert(sysMenuEntity);
     }
 
 

@@ -62,14 +62,15 @@ var vm = new Vue({
                 return ;
             }
 
-            confirm('确定要删除选中的记录？', function(){
+            layer.confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
                     url: baseURL + "sys/menu/delete",
                     data: "menuId=" + menuId,
                     success: function(r){
                         if(r.code === 0){
-                            alert('操作成功', function(){
+                            toastr.success("删除成功!",function(){
+                                layer.closeAll("dialog");
                                 vm.reload();
                             });
                         }else{
@@ -91,12 +92,12 @@ var vm = new Vue({
                 contentType: "application/json",
                 data: JSON.stringify(vm.menu),
                 success: function(r){
-                    if(r.code === 0){
-                        alert('操作成功', function(){
+                    if(r.code === 200){
+                        toastr.success("操作成功!",function(){
                             vm.reload();
                         });
                     }else{
-                        alert(r.msg);
+                        toastr.error(r.msg);
                     }
                 }
             });
@@ -128,13 +129,12 @@ var vm = new Vue({
         },
         validator: function () {
             if(isBlank(vm.menu.name)){
-                alert("菜单名称不能为空");
+                toastr.warning("菜单名称不能为空");
                 return true;
             }
-
             //菜单
             if(vm.menu.type === 1 && isBlank(vm.menu.url)){
-                alert("菜单URL不能为空");
+                toastr.warning("菜单URL不能为空");
                 return true;
             }
         }
@@ -181,7 +181,7 @@ Menu.initColumn = function () {
 function getMenuId () {
     var selected = $('#menuTable').bootstrapTreeTable('getSelections');
     if (selected.length == 0) {
-        alert("请选择一条记录");
+        toastr.warning("请选择一条记录");
         return null;
     } else {
         return selected[0].id;
