@@ -3,16 +3,16 @@ package top.wycfight.thankspring.modules.sys.controller;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.validation.ValidationUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.wycfight.common.utils.PageUtils;
 import top.wycfight.common.utils.ResultData;
 import top.wycfight.common.validator.ValidatorUtils;
 import top.wycfight.common.validator.group.AddGroup;
+import top.wycfight.common.validator.group.UpdateGroup;
+import top.wycfight.thankspring.common.annotation.SysLog;
 import top.wycfight.thankspring.modules.sys.bean.SysRoleEntity;
+import top.wycfight.thankspring.modules.sys.service.SysDeptService;
+import top.wycfight.thankspring.modules.sys.service.SysRoleMenuService;
 import top.wycfight.thankspring.modules.sys.service.SysRoleService;
 
 import java.util.List;
@@ -30,9 +30,14 @@ public class SysRoleController extends AbstractController {
 
     @Autowired
     private SysRoleService sysRoleService;
+    @Autowired
+    private SysRoleMenuService sysRoleMenuService;
+    @Autowired
+    private SysDeptService sysDeptService;
 
     /**
      * 查询所有角色列表
+     *
      * @return
      */
     @RequestMapping("/select")
@@ -44,6 +49,7 @@ public class SysRoleController extends AbstractController {
 
     /**
      * 分页查询角色列表
+     *
      * @param params
      * @return
      */
@@ -56,15 +62,62 @@ public class SysRoleController extends AbstractController {
 
     /**
      * 角色保存
-     * @param sysRoleEntity
+     *
+     * @param sysRoleEntity 角色实体
      * @return
      */
+    @SysLog("保存角色")
     @RequiresPermissions("sys:role:save")
     @RequestMapping("/save")
     public ResultData save(@RequestBody SysRoleEntity sysRoleEntity) {
-        ValidatorUtils.validateEntity(sysRoleEntity,AddGroup.class);
+        ValidatorUtils.validateEntity(sysRoleEntity, AddGroup.class);
         sysRoleService.save(sysRoleEntity);
+        return ResultData.ok();
+    }
+
+    /**
+     * 根据ID查询角色信息
+     * @param roleId 角色ID
+     * @return
+     */
+    @RequiresPermissions("sys:role:info")
+    @RequestMapping("/info/{roleId}")
+    public ResultData info(@PathVariable("roleId") Long roleId) {
+        SysRoleEntity sysRoleEntity = sysRoleService.selectById(roleId);
+        // 查询出来所有的菜单ID
+        List<Long> menuIds = sysRoleMenuService.queryMenuIdListByRoleId(roleId);
+        sysRoleEntity.setMenuIdList(menuIds);
+        sysRoleEntity.setDeptName(sysDeptService.selectById(sysRoleEntity.getDeptId()).getName());
+        // 查询出来所有的部门ID根据角色ID
+        return ResultData.ok().put("role", sysRoleEntity);
+    }
+
+    /**
+     * 更新角色信息
+     * @param sysRoleEntity 角色信息
+     * @return
+     */
+    @SysLog("更新角色")
+    @RequiresPermissions("sys:role:update")
+    @RequestMapping("/update")
+    public ResultData update(@RequestBody SysRoleEntity sysRoleEntity) {
+        ValidatorUtils.validateEntity(sysRoleEntity, UpdateGroup.class);
+        sysRoleService.update(sysRoleEntity);
+        return ResultData.ok();
+    }
+
+    /**
+     * 删除角色信息
+     * @param roleIds
+     * @return
+     */
+    @SysLog("删除角色")
+    @RequiresPermissions("sys:role:delete")
+    @RequestMapping("/delete")
+    public ResultData delete(@RequestBody Long[] roleIds) {
+        sysRoleService.deleteBatch(roleIds);
         return ResultData.ok();
 
     }
+
 }

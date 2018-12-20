@@ -18,4 +18,10 @@ public interface SysUserRoleService extends IService<SysUserRoleEntity> {
      * @return
      */
     List<Long>  queryRoleIdList(Long userId);
+
+    /**
+     * 通过角色ID 删除与用户对应的关系
+     * @param roleIds
+     */
+    void deleteBatch(Long[] roleIds);
 }

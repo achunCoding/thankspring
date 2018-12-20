@@ -12,17 +12,20 @@ import java.util.List;
 
 /**
  * @author: wycfight@163.com
- * @description:
+ * @description: 系统用户角色Service
  * @create: 2018-12-16 20:57
  * @modify By:
  **/
 @Service("sysUserRoleService")
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper,SysUserRoleEntity> implements SysUserRoleService {
-    @Autowired
-    private SysUserRoleMapper sysUserRoleMapper;
     @Override
     public List<Long> queryRoleIdList(Long userId) {
-        List<Long> roleIdList = sysUserRoleMapper.queryRoleList(userId);
+        List<Long> roleIdList = baseMapper.queryRoleList(userId);
         return roleIdList;
+    }
+
+    @Override
+    public void deleteBatch(Long[] roleIds) {
+        baseMapper.deleteBatch(roleIds);
     }
 }

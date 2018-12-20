@@ -5,4 +5,11 @@
     <select id="queryRoleList" resultType="java.lang.Long" parameterType="java.lang.Long">
         SELECT role_id FROM sys_user_role where user_id = #{userId}
     </select>
+
+    <delete id="deleteBatch" parameterType="long">
+        DELETE FROM sys_user_role WHERE role_id in
+        <foreach collection="array" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </delete>
 </mapper>

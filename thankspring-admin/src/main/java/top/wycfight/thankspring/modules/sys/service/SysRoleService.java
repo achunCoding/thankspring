@@ -26,4 +26,13 @@ public interface SysRoleService extends IService<SysRoleEntity> {
      * @param sysRoleEntity
      */
     void save(SysRoleEntity sysRoleEntity);
+
+    /**
+     * 更新角色信息
+     * @param sysRoleEntity
+     */
+    void update(SysRoleEntity sysRoleEntity);
+
+
+    void deleteBatch(Long[] roleIds);
 }

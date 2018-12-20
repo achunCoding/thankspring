@@ -130,7 +130,6 @@ var vm = new Vue({
             vm.title = "修改";
             vm.getDataTree();
             vm.getMenuTree(roleId);
-
             vm.getDept();
         },
         del: function () {
@@ -139,19 +138,20 @@ var vm = new Vue({
                 return ;
             }
 
-            confirm('确定要删除选中的记录？', function(){
+            layer.confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
                     url: baseURL + "sys/role/delete",
                     contentType: "application/json",
                     data: JSON.stringify(roleIds),
                     success: function(r){
-                        if(r.code == 0){
-                            alert('操作成功', function(){
+                        if(r.code == 200){
+                            toastr.success("删除成功!",function(){
+                                layer.closeAll("dialog");
                                 vm.reload();
                             });
                         }else{
-                            alert(r.msg);
+                            toastr.error(r.msg);
                         }
                     }
                 });
@@ -164,6 +164,7 @@ var vm = new Vue({
                 //勾选角色所拥有的菜单
                 var menuIds = vm.role.menuIdList;
                 for(var i=0; i<menuIds.length; i++) {
+                    // 根据menuId 设置节点选中状态
                     var node = menu_ztree.getNodeByParam("menuId", menuIds[i]);
                     menu_ztree.checkNode(node, true, false);
                 }
@@ -202,7 +203,7 @@ var vm = new Vue({
                 contentType: "application/json",
                 data: JSON.stringify(vm.role),
                 success: function(r){
-                    if(r.code === 0){
+                    if(r.code === 200){
                         toastr.success("操作成功!",function(){
                             layer.closeAll("dialog");
                             vm.reload();
@@ -237,6 +238,7 @@ var vm = new Vue({
             //加载部门树
             $.get(baseURL + "sys/dept/list", function(r){
                 dept_ztree = $.fn.zTree.init($("#deptTree"), dept_setting, r);
+                console.log(vm.role.deptId);
                 var node = dept_ztree.getNodeByParam("deptId", vm.role.deptId);
                 if(node != null){
                     dept_ztree.selectNode(node);
