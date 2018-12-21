@@ -6,7 +6,7 @@
     <groupId>top.wycfight</groupId>
     <artifactId>thankspring-admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <description>thankspring-admin</description>
 
     <parent>
