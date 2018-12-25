@@ -97,12 +97,6 @@ public class SysUserController extends AbstractController {
         sysUserEntity.setRoleIdList(roleIdList);
         return ResultData.ok().put("user",sysUserEntity);
     }
-
-
-
-
-
-
     /**
      * 获取登录的用户信息
      *

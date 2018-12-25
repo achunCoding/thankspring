@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import top.wycfight.common.utils.PageUtils;
 import top.wycfight.thankspring.common.utils.Constant;
 import top.wycfight.thankspring.common.utils.Query;
+import top.wycfight.thankspring.modules.sys.bean.SysDeptEntity;
 import top.wycfight.thankspring.modules.sys.bean.SysMenuEntity;
 import top.wycfight.thankspring.modules.sys.bean.SysUserEntity;
 import top.wycfight.thankspring.modules.sys.mapper.SysMenuMapper;
 import top.wycfight.thankspring.modules.sys.mapper.SysUserMapper;
+import top.wycfight.thankspring.modules.sys.service.SysDeptService;
 import top.wycfight.thankspring.modules.sys.service.SysMenuService;
 import top.wycfight.thankspring.modules.sys.service.SysUserService;
 import top.wycfight.thankspring.modules.sys.shiro.ShiroUtils;
@@ -32,6 +34,8 @@ import java.util.Map;
  **/
 @Service("sysUserService")
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements SysUserService {
+    @Autowired
+    private SysDeptService sysDeptService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -43,6 +47,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
                         .like(StringUtils.isNotBlank(username), "username", username)
                         .addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String) params.get(Constant.SQL_FILTER))
         );
+        // 查询出所属部门，放到页面上
+        for (SysUserEntity sysUserEntity : page.getRecords()) {
+            SysDeptEntity sysDeptEntity = sysDeptService.selectById(sysUserEntity.getDeptId());
+            if (sysDeptEntity != null) {
+                sysUserEntity.setDeptName(sysDeptEntity.getName());
+            }
+        }
         return new PageUtils(page);
     }
 

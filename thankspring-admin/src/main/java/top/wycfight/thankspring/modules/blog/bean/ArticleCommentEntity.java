@@ -8,6 +8,7 @@ import top.wycfight.common.validator.group.UpdateGroup;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +19,8 @@ import java.util.List;
  * @create: 2018-12-23 18:24
  * @modify By:
  **/
-@TableName("blog_comment")
-public class Comment implements Serializable {
+@TableName("article_comment")
+public class ArticleCommentEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 评论ID 自增 */
     @TableId
@@ -51,7 +52,9 @@ public class Comment implements Serializable {
     /** 是否是博主的评论 0：不是 1：是 */
     private Integer isAdmin;
     /** 当前评论下的所有子评论 */
-    private List<Comment> childComments;
+    private List<ArticleCommentEntity> childComments;
+    /** 文章ID */
+    private Long postId;
 
     /**
      * 获取：评论ID
@@ -245,6 +248,38 @@ public class Comment implements Serializable {
         this.isAdmin = isAdmin;
     }
 
+    /**
+     * 获取：当前评论下的所有子评论
+     * @return
+     */
+    public List<ArticleCommentEntity> getChildComments() {
+        return childComments;
+    }
+
+    /**
+     * 设置：当前评论下的所有子评论
+     * @param childComments
+     */
+    public void setChildComments(List<ArticleCommentEntity> childComments) {
+        this.childComments = childComments;
+    }
+
+    /**
+     * 获取:文章ID
+     * @return
+     */
+    public Long getPostId() {
+        return postId;
+    }
+
+    /**
+     * 设置：文章ID
+     * @param postId
+     */
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -260,6 +295,7 @@ public class Comment implements Serializable {
                 ", 上一级=" + commentParent +
                 ", 提交状态=" + commentStatus +
                 ", 是否是博主=" + isAdmin +
+                ", 文章ID="+postId +
                 '}';
     }
 }

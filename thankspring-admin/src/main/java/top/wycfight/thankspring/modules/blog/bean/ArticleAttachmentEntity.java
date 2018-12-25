@@ -12,8 +12,8 @@ import java.util.Date;
  * @create: 2018-12-21 16:54
  * @modified By:
  **/
-@TableName("blog_attachment")
-public class Attachment implements Serializable {
+@TableName("article_attachment")
+public class ArticleAttachmentEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -51,7 +51,10 @@ public class Attachment implements Serializable {
      */
     private Date attachCreated;
 
-
+    /**
+     * 附件大小
+     */
+    private String attachSize;
     /**
      * 附件长宽
      */
@@ -227,12 +230,29 @@ public class Attachment implements Serializable {
         this.attachOrigin = attachOrigin;
     }
 
+    /**
+     * 获取：附件大小
+     * @return
+     */
+    public String getAttachSize() {
+        return attachSize;
+    }
+
+    /**
+     * 设置：附件大小
+     * @param attachSize
+     */
+    public void setAttachSize(String attachSize) {
+        this.attachSize = attachSize;
+    }
+
     @Override
     public String toString() {
         return "Attachment{" +
                 "附件ID=" + attachId +
                 ", 附件名称='" + attachName + '\'' +
                 ", 附件路径='" + attachPath + '\'' +
+                ",附件大小='" + attachSize + "\'" +
                 ", 附件压缩路径='" + attachSmallPath + '\'' +
                 ", 附件类型='" + attachType + '\'' +
                 ", 附件后缀='" + attachSuffix + '\'' +

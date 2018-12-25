@@ -74,7 +74,7 @@ var vm = new Vue({
                                 vm.reload();
                             });
                         }else{
-                            alert(r.msg);
+                            toastr.warning(r.msg);
                         }
                     }
                 });

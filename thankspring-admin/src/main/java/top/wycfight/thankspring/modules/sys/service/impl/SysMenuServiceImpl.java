@@ -69,12 +69,24 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         this.insert(sysMenuEntity);
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void update(SysMenuEntity sysMenuEntity) {
+        this.updateById(sysMenuEntity);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delete(long menuId) {
+        this.deleteById(menuId);
+    }
+
 
     private List<SysMenuEntity> getAllMenuList(List<Long> menuIdList) {
         // 查询根菜单列表
         List<SysMenuEntity> menuList = queryListParentId(0L, menuIdList);
         // 递归获取子菜单
-        getMenuTreeList(menuList,menuIdList);
+        getMenuTreeList(menuList, menuIdList);
         return menuList;
     }
 

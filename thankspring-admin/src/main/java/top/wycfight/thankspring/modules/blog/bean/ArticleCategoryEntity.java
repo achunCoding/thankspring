@@ -16,8 +16,8 @@ import java.util.Date;
  * @create: 2018-12-21 17:15
  * @modified By:
  **/
-@TableName("blog_category")
-public class Category implements Serializable {
+@TableName("article_category")
+public class ArticleCategoryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 分类ID */
     @TableId
@@ -28,7 +28,7 @@ public class Category implements Serializable {
     /** 分类路径 */
     @NotBlank(message = "分类路径不能为空",groups = {AddGroup.class,UpdateGroup.class})
     private String cateUrl;
-    /** 分类名称 */
+    /** 分类描述 */
     private String cateDesc;
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -36,8 +36,6 @@ public class Category implements Serializable {
     /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
-
-    // TODO 和文章多对多
 
     /**
      * 获取：分类ID
