@@ -10,10 +10,183 @@ Target Server Type    : MYSQL
 Target Server Version : 50559
 File Encoding         : 65001
 
-Date: 2018-12-19 17:23:06
+Date: 2018-12-25 17:39:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for article_attachment
+-- ----------------------------
+DROP TABLE IF EXISTS `article_attachment`;
+CREATE TABLE `article_attachment` (
+  `attach_id` bigint(20) NOT NULL,
+  `attach_created` datetime DEFAULT NULL COMMENT '上传时间',
+  `attach_location` varchar(255) DEFAULT NULL COMMENT '附件存储地址',
+  `attach_name` varchar(255) DEFAULT NULL COMMENT '附件名',
+  `attach_origin` int(11) DEFAULT NULL COMMENT '附件来源，0：上传，1：外部链接',
+  `attach_path` varchar(255) DEFAULT NULL COMMENT '附件路径',
+  `attach_size` varchar(255) DEFAULT NULL COMMENT '附件大小',
+  `attach_small_path` varchar(255) DEFAULT NULL COMMENT '附件缩略图路径',
+  `attach_suffix` varchar(255) DEFAULT NULL COMMENT '附件后缀',
+  `attach_type` varchar(255) DEFAULT NULL COMMENT '附件类型',
+  `attach_wh` varchar(255) DEFAULT NULL COMMENT '附件长宽',
+  PRIMARY KEY (`attach_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='附件';
+
+-- ----------------------------
+-- Records of article_attachment
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for article_category
+-- ----------------------------
+DROP TABLE IF EXISTS `article_category`;
+CREATE TABLE `article_category` (
+  `cate_id` bigint(20) NOT NULL,
+  `cate_desc` varchar(255) DEFAULT NULL COMMENT '分类描述',
+  `cate_name` varchar(255) DEFAULT NULL COMMENT '分类名称',
+  `cate_url` varchar(255) DEFAULT NULL COMMENT '分类路径',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`cate_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类';
+
+-- ----------------------------
+-- Records of article_category
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for article_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `article_comment`;
+CREATE TABLE `article_comment` (
+  `comment_id` bigint(20) NOT NULL,
+  `comment_agent` varchar(512) DEFAULT NULL COMMENT '评论者ua信息',
+  `comment_author` varchar(255) DEFAULT NULL COMMENT '评论人',
+  `comment_author_avatar_md5` varchar(255) DEFAULT NULL COMMENT '评论人的头像，用于gavatar',
+  `comment_author_email` varchar(255) DEFAULT NULL COMMENT '评论人邮箱',
+  `comment_author_ip` varchar(255) DEFAULT NULL COMMENT '评论人的IP',
+  `comment_author_url` varchar(255) DEFAULT NULL COMMENT '评论人的主页',
+  `comment_content` longtext COMMENT '评论内容',
+  `comment_date` datetime DEFAULT NULL COMMENT '评论时间',
+  `comment_parent` bigint(20) DEFAULT NULL COMMENT '上一级',
+  `comment_status` int(11) DEFAULT NULL COMMENT '评论状态：0：正常，1：待审核，2：回收站',
+  `is_admin` int(11) DEFAULT NULL COMMENT '是否是博主的评论 0：不是 1：是',
+  PRIMARY KEY (`comment_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='评论';
+
+-- ----------------------------
+-- Records of article_comment
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for article_gallery
+-- ----------------------------
+DROP TABLE IF EXISTS `article_gallery`;
+CREATE TABLE `article_gallery` (
+  `gallery_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gallery_date` varchar(255) DEFAULT NULL COMMENT '图片日期 / 拍摄日期',
+  `gallery_desc` varchar(255) DEFAULT NULL COMMENT '图片描述',
+  `gallery_location` varchar(255) DEFAULT NULL COMMENT '图片拍摄地点',
+  `gallery_name` varchar(255) DEFAULT NULL COMMENT '图片名称',
+  `gallery_thumbnail_url` varchar(255) DEFAULT NULL COMMENT '图片路径地址',
+  `gallery_url` varchar(255) DEFAULT NULL COMMENT '图片地址',
+  PRIMARY KEY (`gallery_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='相册';
+
+-- ----------------------------
+-- Records of article_gallery
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for article_link
+-- ----------------------------
+DROP TABLE IF EXISTS `article_link`;
+CREATE TABLE `article_link` (
+  `link_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `link_desc` varchar(255) DEFAULT NULL COMMENT '友情链接名称',
+  `link_name` varchar(255) DEFAULT NULL COMMENT '友情链接url',
+  `link_pic` varchar(255) DEFAULT NULL COMMENT '友情链接头像',
+  `link_url` varchar(255) DEFAULT NULL COMMENT '友情链接描述',
+  PRIMARY KEY (`link_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='友情链接';
+
+-- ----------------------------
+-- Records of article_link
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for article_post
+-- ----------------------------
+DROP TABLE IF EXISTS `article_post`;
+CREATE TABLE `article_post` (
+  `post_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `post_title` varchar(255) NOT NULL COMMENT '文章标题',
+  `post_type` varchar(255) DEFAULT NULL COMMENT '文章类型',
+  `post_content_md` longtext COMMENT '文章内容 MarkDown',
+  `post_content` longtext COMMENT '文章内容 HTML',
+  `post_url` varchar(255) DEFAULT NULL COMMENT '文章路径',
+  `post_thumbnail` varchar(255) DEFAULT NULL COMMENT '缩略图',
+  `post_date` datetime DEFAULT NULL COMMENT '发表日期',
+  `post_update` datetime DEFAULT NULL COMMENT '最后一次更新日期',
+  `post_status` int(11) DEFAULT NULL COMMENT '0：已发布 1：草稿：2回收站 ',
+  `post_views` bigint(20) DEFAULT NULL COMMENT '评论数',
+  `allow_comment` int(11) DEFAULT NULL COMMENT '是否允许评论',
+  `custom_tpl` varchar(255) DEFAULT NULL COMMENT '指定渲染模板',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '提交用户',
+  PRIMARY KEY (`post_id`),
+  UNIQUE KEY `post_title` (`post_title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章';
+
+-- ----------------------------
+-- Records of article_post
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for article_post_category
+-- ----------------------------
+DROP TABLE IF EXISTS `article_post_category`;
+CREATE TABLE `article_post_category` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `post_id` bigint(20) DEFAULT NULL COMMENT '文章ID',
+  `category_id` bigint(20) DEFAULT NULL COMMENT '分类ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章与分类对应关系';
+
+-- ----------------------------
+-- Records of article_post_category
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for article_post_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `article_post_tag`;
+CREATE TABLE `article_post_tag` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `post_id` bigint(20) DEFAULT NULL COMMENT '文章ID',
+  `tag_id` bigint(20) DEFAULT NULL COMMENT '标签ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章与标签对应关系';
+
+-- ----------------------------
+-- Records of article_post_tag
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for article_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `article_tag`;
+CREATE TABLE `article_tag` (
+  `tag_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tag_name` varchar(255) DEFAULT NULL COMMENT '标签名称',
+  `tag_url` varchar(255) DEFAULT NULL COMMENT '标签Url',
+  PRIMARY KEY (`tag_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='标签';
+
+-- ----------------------------
+-- Records of article_tag
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -52,7 +225,7 @@ CREATE TABLE `sys_log` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='系统日志';
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='系统日志';
 
 -- ----------------------------
 -- Records of sys_log
@@ -87,6 +260,15 @@ INSERT INTO `sys_log` VALUES ('27', 'admin', '添加部门', 'top.wycfight.thank
 INSERT INTO `sys_log` VALUES ('28', 'admin', '添加部门', 'top.wycfight.thankspring.modules.sys.controller.SysDeptController,save()', '{\"deptId\":2,\"parentId\":1,\"name\":\"你说啥呢\",\"parentName\":\"春纯蠢唇\",\"orderNum\":1,\"createTime\":\"Dec 19, 2018 2:18:54 PM\",\"updateTime\":\"Dec 19, 2018 2:18:54 PM\"}', '79', '0:0:0:0:0:0:0:1', '2018-12-19 14:18:54', '2018-12-19 14:18:54');
 INSERT INTO `sys_log` VALUES ('29', 'admin', '添加部门', 'top.wycfight.thankspring.modules.sys.controller.SysDeptController,save()', '{\"deptId\":3,\"parentId\":2,\"name\":\"hahahah\",\"parentName\":\"你说啥呢\",\"orderNum\":1,\"createTime\":\"Dec 19, 2018 2:30:54 PM\",\"updateTime\":\"Dec 19, 2018 2:30:54 PM\"}', '75', '0:0:0:0:0:0:0:1', '2018-12-19 14:30:54', '2018-12-19 14:30:54');
 INSERT INTO `sys_log` VALUES ('30', 'admin', '删除部门', 'top.wycfight.thankspring.modules.sys.controller.SysDeptController,delete()', '3', '6853', '0:0:0:0:0:0:0:1', '2018-12-19 15:37:28', '2018-12-19 15:37:28');
+INSERT INTO `sys_log` VALUES ('31', 'admin', '更新角色', 'top.wycfight.thankspring.modules.sys.controller.SysRoleController,update()', '{\"roleId\":3,\"roleName\":\"嘻嘻\",\"remark\":\"嘻嘻嘻嘻\",\"deptId\":1,\"deptName\":\"春纯蠢唇\",\"menuIdList\":[1,2,15,16,17,18,3,19,20,21,22,4,23,24,25,26,5,27,29,31,32,33,34,35,36,37,38,39,40],\"deptIdList\":[],\"createTime\":\"Dec 20, 2018 8:35:00 AM\",\"updateTime\":\"Dec 20, 2018 10:43:02 AM\"}', '92', '0:0:0:0:0:0:0:1', '2018-12-20 10:43:02', '2018-12-20 10:43:02');
+INSERT INTO `sys_log` VALUES ('32', 'admin', '删除角色', 'top.wycfight.thankspring.modules.sys.controller.SysRoleController,delete()', '[1,2,3]', '32', '0:0:0:0:0:0:0:1', '2018-12-20 10:59:03', '2018-12-20 10:59:03');
+INSERT INTO `sys_log` VALUES ('33', 'admin', '保存角色', 'top.wycfight.thankspring.modules.sys.controller.SysRoleController,save()', '{\"roleId\":4,\"roleName\":\"123213\",\"remark\":\"213213213\",\"deptId\":1,\"deptName\":\"春纯蠢唇\",\"menuIdList\":[1,2,15,16,17,18,3,19,20,21,22,4,23,24,25,26,5,27,29,31,32,33,34,35,36,37,38,39,40],\"deptIdList\":[],\"createTime\":\"Dec 20, 2018 11:02:38 AM\",\"updateTime\":\"Dec 20, 2018 11:02:38 AM\"}', '4369', '0:0:0:0:0:0:0:1', '2018-12-20 11:02:38', '2018-12-20 11:02:38');
+INSERT INTO `sys_log` VALUES ('34', 'admin', '保存用户', 'top.wycfight.thankspring.modules.sys.controller.SysUserController,save()', '{\"userId\":2,\"username\":\"1111\",\"password\":\"ab1f3ee7b29565018e462043781f5f59b43741daefa8e0abeda48259f50b9128\",\"salt\":\"5FQmGUnFmXkfiDoFfhrv\",\"email\":\"111@qq.com\",\"mobile\":\"17865913036\",\"status\":1,\"roleIdList\":[],\"createTime\":\"Dec 20, 2018 4:24:58 PM\",\"updateTime\":\"Dec 20, 2018 4:24:58 PM\"}', '3639', '0:0:0:0:0:0:0:1', '2018-12-20 16:24:58', '2018-12-20 16:24:58');
+INSERT INTO `sys_log` VALUES ('35', 'admin', '保存用户', 'top.wycfight.thankspring.modules.sys.controller.SysUserController,save()', '{\"userId\":3,\"username\":\"typ\",\"password\":\"c193698486863387a188857561ca6a82e900536a86a4d6d94fe182031c211c51\",\"salt\":\"Xiia694xCeZMTWui8Pkx\",\"email\":\"typ@qq.com\",\"mobile\":\"17865913036\",\"status\":1,\"roleIdList\":[],\"createTime\":\"Dec 20, 2018 5:21:57 PM\",\"updateTime\":\"Dec 20, 2018 5:21:57 PM\",\"deptId\":2,\"deptName\":\"你说啥呢\"}', '4140', '0:0:0:0:0:0:0:1', '2018-12-20 17:21:57', '2018-12-20 17:21:57');
+INSERT INTO `sys_log` VALUES ('36', 'admin', '保存菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,save()', '{\"menuId\":41,\"parentId\":0,\"parentName\":\"一级菜单\",\"name\":\"博客管理\",\"type\":0,\"icon\":\"fa fa-heart\",\"orderNum\":1}', '81', '0:0:0:0:0:0:0:1', '2018-12-25 08:35:10', '2018-12-25 08:35:10');
+INSERT INTO `sys_log` VALUES ('37', 'admin', '保存菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,save()', '{\"menuId\":42,\"parentId\":41,\"parentName\":\"博客管理\",\"name\":\"文章\",\"url\":\"blog/post/list\",\"perms\":\"blog:post:list\",\"type\":1,\"icon\":\"fa fa-book\",\"orderNum\":0}', '231', '0:0:0:0:0:0:0:1', '2018-12-25 09:55:39', '2018-12-25 09:55:39');
+INSERT INTO `sys_log` VALUES ('38', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":42,\"parentId\":41,\"parentName\":\"博客管理\",\"name\":\"文章\",\"url\":\"blog/post/list.html\",\"perms\":\"blog:post:list\",\"type\":1,\"icon\":\"fa fa-book\",\"orderNum\":0}', '20', '0:0:0:0:0:0:0:1', '2018-12-25 09:56:18', '2018-12-25 09:56:18');
+INSERT INTO `sys_log` VALUES ('39', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":42,\"parentId\":41,\"parentName\":\"博客管理\",\"name\":\"文章\",\"url\":\"blog/post/list.html\",\"perms\":\"\",\"type\":1,\"icon\":\"fa fa-book\",\"orderNum\":0}', '11', '0:0:0:0:0:0:0:1', '2018-12-25 09:57:47', '2018-12-25 09:57:47');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -102,7 +284,7 @@ CREATE TABLE `sys_menu` (
   `icon` varchar(50) DEFAULT NULL COMMENT '菜单图标',
   `order_num` int(11) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
 
 -- ----------------------------
 -- Records of sys_menu
@@ -136,6 +318,8 @@ INSERT INTO `sys_menu` VALUES ('37', '36', '查看', null, 'sys:dict:list,sys:di
 INSERT INTO `sys_menu` VALUES ('38', '36', '新增', null, 'sys:dict:save', '2', null, '6');
 INSERT INTO `sys_menu` VALUES ('39', '36', '修改', null, 'sys:dict:update', '2', null, '6');
 INSERT INTO `sys_menu` VALUES ('40', '36', '删除', null, 'sys:dict:delete', '2', null, '6');
+INSERT INTO `sys_menu` VALUES ('41', '0', '博客管理', null, null, '0', 'fa fa-heart', '1');
+INSERT INTO `sys_menu` VALUES ('42', '41', '文章', 'blog/post/list.html', '', '1', 'fa fa-book', '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -149,11 +333,12 @@ CREATE TABLE `sys_role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
+INSERT INTO `sys_role` VALUES ('4', '123213', '213213213', '1', '2018-12-20 11:02:38', '2018-12-20 11:02:38');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -164,11 +349,40 @@ CREATE TABLE `sys_role_menu` (
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
   `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
+) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
 
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
+INSERT INTO `sys_role_menu` VALUES ('175', '4', '1');
+INSERT INTO `sys_role_menu` VALUES ('176', '4', '2');
+INSERT INTO `sys_role_menu` VALUES ('177', '4', '15');
+INSERT INTO `sys_role_menu` VALUES ('178', '4', '16');
+INSERT INTO `sys_role_menu` VALUES ('179', '4', '17');
+INSERT INTO `sys_role_menu` VALUES ('180', '4', '18');
+INSERT INTO `sys_role_menu` VALUES ('181', '4', '3');
+INSERT INTO `sys_role_menu` VALUES ('182', '4', '19');
+INSERT INTO `sys_role_menu` VALUES ('183', '4', '20');
+INSERT INTO `sys_role_menu` VALUES ('184', '4', '21');
+INSERT INTO `sys_role_menu` VALUES ('185', '4', '22');
+INSERT INTO `sys_role_menu` VALUES ('186', '4', '4');
+INSERT INTO `sys_role_menu` VALUES ('187', '4', '23');
+INSERT INTO `sys_role_menu` VALUES ('188', '4', '24');
+INSERT INTO `sys_role_menu` VALUES ('189', '4', '25');
+INSERT INTO `sys_role_menu` VALUES ('190', '4', '26');
+INSERT INTO `sys_role_menu` VALUES ('191', '4', '5');
+INSERT INTO `sys_role_menu` VALUES ('192', '4', '27');
+INSERT INTO `sys_role_menu` VALUES ('193', '4', '29');
+INSERT INTO `sys_role_menu` VALUES ('194', '4', '31');
+INSERT INTO `sys_role_menu` VALUES ('195', '4', '32');
+INSERT INTO `sys_role_menu` VALUES ('196', '4', '33');
+INSERT INTO `sys_role_menu` VALUES ('197', '4', '34');
+INSERT INTO `sys_role_menu` VALUES ('198', '4', '35');
+INSERT INTO `sys_role_menu` VALUES ('199', '4', '36');
+INSERT INTO `sys_role_menu` VALUES ('200', '4', '37');
+INSERT INTO `sys_role_menu` VALUES ('201', '4', '38');
+INSERT INTO `sys_role_menu` VALUES ('202', '4', '39');
+INSERT INTO `sys_role_menu` VALUES ('203', '4', '40');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -187,12 +401,14 @@ CREATE TABLE `sys_user` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='系统用户';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='系统用户';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('1', 'admin', 'e1153123d7d180ceeb820d577ff119876678732a68eef4e6ffc0b1f06a01f91b', 'YzcmCZNvbXocrsz9dm8e', 'root@renren.io', '13612345678', '1', '1', '2016-11-11 11:11:11', '2018-12-17 08:19:46');
+INSERT INTO `sys_user` VALUES ('2', '1111', 'ab1f3ee7b29565018e462043781f5f59b43741daefa8e0abeda48259f50b9128', '5FQmGUnFmXkfiDoFfhrv', '111@qq.com', '17865913036', '1', null, '2018-12-20 16:24:58', '2018-12-20 16:24:58');
+INSERT INTO `sys_user` VALUES ('3', 'typ', 'c193698486863387a188857561ca6a82e900536a86a4d6d94fe182031c211c51', 'Xiia694xCeZMTWui8Pkx', 'typ@qq.com', '17865913036', '1', '2', '2018-12-20 17:21:57', '2018-12-20 17:21:57');
 
 -- ----------------------------
 -- Table structure for sys_user_role
