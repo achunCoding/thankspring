@@ -19,7 +19,7 @@ import java.util.List;
  * @create: 2018-12-23 18:24
  * @modify By:
  **/
-@TableName("article_comment")
+@TableName("admin_article_comment")
 public class ArticleCommentEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 评论ID 自增 */

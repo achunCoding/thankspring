@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @create: 2018-12-23 19:04
  * @modify By:
  **/
-@TableName("article_gallery")
+@TableName("admin_article_gallery")
 public class ArticleGalleryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 相册ID */

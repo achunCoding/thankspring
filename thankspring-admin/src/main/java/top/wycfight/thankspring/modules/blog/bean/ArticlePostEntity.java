@@ -13,7 +13,7 @@ import java.util.Date;
  * @create: 2018-12-24 09:18
  * @modified By:
  **/
-@TableName("article_post")
+@TableName("admin_article_post")
 public class ArticlePostEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 文章编号 */

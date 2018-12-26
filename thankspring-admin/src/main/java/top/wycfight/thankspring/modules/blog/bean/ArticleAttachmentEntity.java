@@ -12,7 +12,7 @@ import java.util.Date;
  * @create: 2018-12-21 16:54
  * @modified By:
  **/
-@TableName("article_attachment")
+@TableName("admin_article_attachment")
 public class ArticleAttachmentEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

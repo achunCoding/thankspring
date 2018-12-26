@@ -30,9 +30,20 @@ public class SysPageController {
     @Value("${geetest.newfailback: false}")
     private boolean newFailBack;
 
+    /**
+     * 跳转到系统模板
+     * @param module
+     * @param url
+     * @return
+     */
     @RequestMapping("modules/{module}/{url}.html")
     public String module(@PathVariable("module") String module, @PathVariable("url") String url) {
         return "modules/" + module + "/" + url;
+    }
+
+    @RequestMapping("admin/{article}/{url}.html")
+    public String article(@PathVariable("article") String article, @PathVariable("url") String url) {
+        return "admin/" + article + "/" + url;
     }
     @RequestMapping(value = {"/", "index.html"})
     public String index(){
