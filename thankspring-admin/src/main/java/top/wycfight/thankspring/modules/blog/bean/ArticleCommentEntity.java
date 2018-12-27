@@ -2,6 +2,7 @@ package top.wycfight.thankspring.modules.blog.bean;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import top.wycfight.common.validator.group.AddGroup;
 import top.wycfight.common.validator.group.UpdateGroup;
@@ -19,7 +20,7 @@ import java.util.List;
  * @create: 2018-12-23 18:24
  * @modify By:
  **/
-@TableName("admin_article_comment")
+@TableName("article_comment")
 public class ArticleCommentEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 评论ID 自增 */
@@ -39,6 +40,7 @@ public class ArticleCommentEntity implements Serializable {
     /**评论人的头像，用于gavatar */
     private String commentAuthorAvatarMd5;
     /** 评论时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date commentDate;
     /** 评论内容 */
     @NotBlank(message = "评论内容不能为空",groups = {AddGroup.class,UpdateGroup.class})

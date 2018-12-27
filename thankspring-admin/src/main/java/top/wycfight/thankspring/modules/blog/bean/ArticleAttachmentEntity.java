@@ -2,6 +2,7 @@ package top.wycfight.thankspring.modules.blog.bean;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
  * @create: 2018-12-21 16:54
  * @modified By:
  **/
-@TableName("admin_article_attachment")
+@TableName("article_attachment")
 public class ArticleAttachmentEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,6 +50,7 @@ public class ArticleAttachmentEntity implements Serializable {
     /**
      * 上传时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date attachCreated;
 
     /**

@@ -1,7 +1,9 @@
 package top.wycfight.thankspring.modules.blog.bean;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import top.wycfight.thankspring.modules.sys.bean.SysUserEntity;
 
 import java.io.Serializable;
@@ -13,7 +15,7 @@ import java.util.Date;
  * @create: 2018-12-24 09:18
  * @modified By:
  **/
-@TableName("admin_article_post")
+@TableName("article_post")
 public class ArticlePostEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 文章编号 */
@@ -34,8 +36,10 @@ public class ArticlePostEntity implements Serializable {
     /** 缩略图 */
     private String postThumbnail;
     /** 发表日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date postDate;
     /** 最后一次更新日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date postUpdate;
     /** 0：已发布 1：草稿：2回收站 */
     private Integer postStatus;
@@ -45,6 +49,9 @@ public class ArticlePostEntity implements Serializable {
     private Integer allowComment;
     /** 指定渲染模板 */
     private String customTpl;
+    /** 分类名称 */
+    @TableField(exist = false)
+    private String sortName;
 
 
     /**
@@ -271,6 +278,22 @@ public class ArticlePostEntity implements Serializable {
         this.customTpl = customTpl;
     }
 
+    /**
+     * 获取：分类名称
+     * @return
+     */
+    public String getSortName() {
+        return sortName;
+    }
+
+    /**
+     * 设置：分类名称
+     * @param sortName
+     */
+    public void setSortName(String sortName) {
+        this.sortName = sortName;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -288,6 +311,7 @@ public class ArticlePostEntity implements Serializable {
                 ", 访问量=" + postViews +
                 ", 是否 允许评价=" + allowComment +
                 ", 指定渲染模板='" + customTpl + '\'' +
+                ",分类名称'=" + sortName +
                 '}';
     }
 }

@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @create: 2018-12-24 15:34
  * @modified By:
  **/
-@TableName("admin_article_post_tag")
+@TableName("article_post_tag")
 public class ArticlePostTagEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 文章标签ID */

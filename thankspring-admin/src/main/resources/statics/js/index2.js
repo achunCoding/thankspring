@@ -120,7 +120,6 @@ function routerList(router, menuList) {
             routerList(router, menu.list);
         } else if (menu.type == 1) {
             router.add('#' + menu.url, function () {
-                console.log("哈哈")
                 // location.hash则可以用来获取或设置页面的标签值
                 var url = window.location.hash;
                 //替换iframe的url

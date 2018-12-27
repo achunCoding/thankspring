@@ -16,7 +16,7 @@ import java.util.Date;
  * @create: 2018-12-21 17:15
  * @modified By:
  **/
-@TableName("admin_article_category")
+@TableName("article_category")
 public class ArticleCategoryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 分类ID */

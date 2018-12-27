@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @create: 2018-12-24 15:27
  * @modified By:
  **/
-@TableName("admin_article_link")
+@TableName("article_link")
 public class ArticleLinkEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 友情链接ID */

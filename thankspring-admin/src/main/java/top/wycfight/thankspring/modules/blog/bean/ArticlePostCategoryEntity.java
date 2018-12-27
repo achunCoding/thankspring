@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @create: 2018-12-24 15:15
  * @modified By:
  **/
-@TableName("admin_article_post_category")
+@TableName("article_post_category")
 public class ArticlePostCategoryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 分类/文章ID */
