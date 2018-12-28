@@ -10,7 +10,6 @@ import top.wycfight.thankspring.common.utils.Query;
 import top.wycfight.thankspring.modules.blog.bean.ArticlePostEntity;
 import top.wycfight.thankspring.modules.blog.mapper.ArticlePostMapper;
 import top.wycfight.thankspring.modules.blog.service.ArticlePostService;
-import top.wycfight.thankspring.modules.sys.bean.SysLogEntity;
 
 import java.util.Map;
 
@@ -24,11 +23,18 @@ import java.util.Map;
 public class ArticlePostServiceImpl extends ServiceImpl<ArticlePostMapper, ArticlePostEntity> implements ArticlePostService {
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        String key = (String)params.get("key");
+        String postTitle = (String)params.get("postTitle");
+        String postStatus = (String)params.get("postStatus");
         Page<ArticlePostEntity> page = this.selectPage(
                 new Query<ArticlePostEntity>(params).getPage(),
-                new EntityWrapper<ArticlePostEntity>().like(StringUtils.isNotBlank(key),"username", key)
+                new EntityWrapper<ArticlePostEntity>().like(StringUtils.isNotBlank(postTitle),"postTitle", postTitle)
+                .like(StringUtils.isNotBlank(postStatus),"postStatus",postStatus)
         );
         return new PageUtils(page);
+    }
+
+    @Override
+    public void save(ArticlePostEntity articlePostEntity) {
+        this.insert(articlePostEntity);
     }
 }

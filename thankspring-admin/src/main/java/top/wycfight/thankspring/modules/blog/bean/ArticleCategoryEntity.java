@@ -25,11 +25,11 @@ public class ArticleCategoryEntity implements Serializable {
     /** 分类名称 */
     @NotBlank(message = "分类名称不能为空",groups = {AddGroup.class,UpdateGroup.class})
     private String cateName;
-    /** 分类路径 */
-    @NotBlank(message = "分类路径不能为空",groups = {AddGroup.class,UpdateGroup.class})
-    private String cateUrl;
-    /** 分类描述 */
-    private String cateDesc;
+//    /** 分类路径 */
+//    @NotBlank(message = "分类路径不能为空",groups = {AddGroup.class,UpdateGroup.class})
+//    private String cateUrl;
+//    /** 分类描述 */
+//    private String cateDesc;
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
@@ -69,37 +69,37 @@ public class ArticleCategoryEntity implements Serializable {
         this.cateName = cateName;
     }
 
-    /**
-     * 获取：分类URL
-     * @return
-     */
-    public String getCateUrl() {
-        return cateUrl;
-    }
-
-    /**
-     * 设置：分类URL
-     * @param cateUrl
-     */
-    public void setCateUrl(String cateUrl) {
-        this.cateUrl = cateUrl;
-    }
-
-    /**
-     * 获取：分类描述
-     * @return
-     */
-    public String getCateDesc() {
-        return cateDesc;
-    }
-
-    /**
-     * 设置：分类描述
-     * @param cateDesc
-     */
-    public void setCateDesc(String cateDesc) {
-        this.cateDesc = cateDesc;
-    }
+//    /**
+//     * 获取：分类URL
+//     * @return
+//     */
+//    public String getCateUrl() {
+//        return cateUrl;
+//    }
+//
+//    /**
+//     * 设置：分类URL
+//     * @param cateUrl
+//     */
+//    public void setCateUrl(String cateUrl) {
+//        this.cateUrl = cateUrl;
+//    }
+//
+//    /**
+//     * 获取：分类描述
+//     * @return
+//     */
+//    public String getCateDesc() {
+//        return cateDesc;
+//    }
+//
+//    /**
+//     * 设置：分类描述
+//     * @param cateDesc
+//     */
+//    public void setCateDesc(String cateDesc) {
+//        this.cateDesc = cateDesc;
+//    }
 
     /**
      * 获取：更新时间
@@ -138,8 +138,6 @@ public class ArticleCategoryEntity implements Serializable {
         return "Category{" +
                 "分类ID=" + cateId +
                 ", 分类名称='" + cateName + '\'' +
-                ", 分类URL='" + cateUrl + '\'' +
-                ", 分类描述='" + cateDesc + '\'' +
                 ", 创建时间=" + createTime +
                 ", 更新时间=" + updateTime +
                 '}';

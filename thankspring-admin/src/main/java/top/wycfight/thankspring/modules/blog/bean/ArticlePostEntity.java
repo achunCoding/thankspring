@@ -8,6 +8,7 @@ import top.wycfight.thankspring.modules.sys.bean.SysUserEntity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: wycfight@163.com
@@ -45,13 +46,24 @@ public class ArticlePostEntity implements Serializable {
     private Integer postStatus;
     /** 文章访问量  */
     private Long postViews;
-    /** 是否 允许评价 */
+    /** 是否 允许评价  0:否  1 ：是 */
     private Integer allowComment;
+    /**是否 允许ping  0 :否  1：是*/
+    private Integer allowPing;
+    /** 允许出现在Feed中 0：否   1：是*/
+    private Integer allowFeed;
     /** 指定渲染模板 */
     private String customTpl;
+
     /** 分类名称 */
     @TableField(exist = false)
-    private String sortName;
+    private List<String> sortName;
+    /** 标签名称 */
+    @TableField(exist = false)
+    private List<String> tagNameList;
+    /** 分类ID */
+    @TableField(exist = false)
+    private List<Long> categoryIdList;
 
 
     /**
@@ -282,7 +294,7 @@ public class ArticlePostEntity implements Serializable {
      * 获取：分类名称
      * @return
      */
-    public String getSortName() {
+    public List<String> getSortName() {
         return sortName;
     }
 
@@ -290,8 +302,72 @@ public class ArticlePostEntity implements Serializable {
      * 设置：分类名称
      * @param sortName
      */
-    public void setSortName(String sortName) {
+    public void setSortName(List<String> sortName) {
         this.sortName = sortName;
+    }
+
+    /**
+     * 获取：标签名称
+     * @return
+     */
+    public List<String> getTagNameList() {
+        return tagNameList;
+    }
+
+    /**
+     * 设置：标签名称
+     * @param tagNameList
+     */
+    public void setTagNameList(List<String> tagNameList) {
+        this.tagNameList = tagNameList;
+    }
+
+    /**
+     * 获取：分类ID
+     * @return
+     */
+    public List<Long> getCategoryIdList() {
+        return categoryIdList;
+    }
+
+    /**
+     * 设置：分类ID
+     * @param categoryIdList
+     */
+    public void setCategoryIdList(List<Long> categoryIdList) {
+        this.categoryIdList = categoryIdList;
+    }
+
+    /**
+     * 获取：是否允许Ping 0：否 1：是
+     * @return
+     */
+    public Integer getAllowPing() {
+        return allowPing;
+    }
+
+    /**
+     * 设置： 是否允许Ping 0：否 1：是
+     * @param allowPing
+     */
+    public void setAllowPing(Integer allowPing) {
+        this.allowPing = allowPing;
+    }
+
+    /**
+     * 获取：是否允许Feed 0：否 1：是
+     * @return
+     */
+    public Integer getAllowFeed() {
+        return allowFeed;
+    }
+
+    /**
+     * 设置： 是否允许Feed 0：否 1 ：是
+     * @param allowFeed
+     */
+    public void setAllowFeed(Integer allowFeed) {
+        this.allowFeed = allowFeed;
     }
 
     @Override

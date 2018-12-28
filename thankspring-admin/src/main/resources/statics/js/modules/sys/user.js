@@ -81,13 +81,6 @@ var vm = new Vue({
             deptName: null,
             roleIdList: []
         },
-        // 添加ztree变量
-        ztreeList: {
-            lastValue: "",
-            nodeList: [],
-            fontCss: {},
-            serchDept: "",
-        }
     },
     methods: {
         query: function () {

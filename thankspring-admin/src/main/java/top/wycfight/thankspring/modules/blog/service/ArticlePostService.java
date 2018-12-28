@@ -19,4 +19,6 @@ public interface ArticlePostService extends IService<ArticlePostEntity> {
      * @return
      */
     PageUtils queryPage(Map<String,Object> params);
+
+    void save(ArticlePostEntity articlePostEntity);
 }

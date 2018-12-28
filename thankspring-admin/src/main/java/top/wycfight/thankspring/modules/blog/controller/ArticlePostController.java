@@ -2,11 +2,11 @@ package top.wycfight.thankspring.modules.blog.controller;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.wycfight.common.utils.PageUtils;
 import top.wycfight.common.utils.ResultData;
+import top.wycfight.common.validator.ValidatorUtils;
+import top.wycfight.common.validator.group.AddGroup;
 import top.wycfight.thankspring.modules.blog.bean.ArticlePostEntity;
 import top.wycfight.thankspring.modules.blog.service.ArticlePostService;
 import top.wycfight.thankspring.modules.sys.controller.AbstractController;
@@ -36,6 +36,16 @@ public class ArticlePostController extends AbstractController {
     public ResultData list(@RequestParam Map<String,Object> params) {
         PageUtils page = articlePostService.queryPage(params);
         return ResultData.ok().put("page",page);
+    }
+
+
+    @RequestMapping("/save")
+    @RequiresPermissions("article:post:save")
+    public ResultData save(@RequestBody ArticlePostEntity articlePostEntity) {
+        ValidatorUtils.validateEntity(articlePostEntity,AddGroup.class);
+        articlePostService.save(articlePostEntity);
+        return ResultData.ok();
+
     }
 
 

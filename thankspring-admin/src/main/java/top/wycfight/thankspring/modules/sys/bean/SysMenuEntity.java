@@ -54,7 +54,6 @@ public class SysMenuEntity implements Serializable {
      * 类型     0：目录   1：菜单   2：按钮
      */
     private Integer type;
-
     /**
      * 菜单图标
      */

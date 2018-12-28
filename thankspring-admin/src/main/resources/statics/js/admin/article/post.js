@@ -67,8 +67,11 @@ var setting = {
         }
     }
 };
+var mditor, htmlEditor;
 var ztree;
+var refreshIntervalId;
 Vue.component('v-select', VueSelect.VueSelect);
+Dropzone.autoDiscover = false;
 var vm = new Vue({
     el: '#rrapp',
     data: {
@@ -78,21 +81,23 @@ var vm = new Vue({
             category: ""
         },
         categories: [],
-        showPassword: null,
         showList: true,
         title: null,
-        roleList: {},
-        user: {
-            status: 1,
-            deptId: null,
-            deptName: null,
-            roleIdList: []
-        },
+
         post: {
             created: moment().unix(),
             createdTime: moment().format('YYYY-MM-DD HH:mm'),
-
+            customTpl: 'markdown',
+            tagNameList:[],
+            categoryIdList:[],
+            postStatus:1,
+            allowComment: 1,
+            allowPing: 1,
+            allowFeed: 1,
         },
+    },
+    mounted: function () {
+        refreshIntervalId = setInterval("vm.autoSave()", 10 * 1000);
     },
     methods: {
         query: function () {
@@ -105,7 +110,7 @@ var vm = new Vue({
             vm.user = {deptName: null, deptId: null, status: 1, roleIdList: []};
             vm.showPassword = true;
             //获取角色信息
-            this.getRoleList();
+            this.getCategoryList();
             // 获取部门信息
             vm.getDept();
         },
@@ -161,16 +166,24 @@ var vm = new Vue({
                 });
             });
         },
-        saveOrUpdate: function () {
-            if (vm.validator()) {
-                return;
+        saveOrUpdate: function (status) {
+            // if (vm.validator()) {
+            //     return;
+            // }
+            var content = vm.post.customTpl === 'markdown' ? mditor.value : htmlEditor.summernote('code');
+            if (vm.post.customTpl === 'markdown') {
+                vm.post.postContentMd = content;
+
+            } else {
+                vm.post.postContent = content;
             }
-            var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
+            var url = vm.post.postId == null ? "article/post/save" : "article/post/update";
+            vm.post.postStatus = status;
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
                 contentType: "application/json",
-                data: JSON.stringify(vm.user),
+                data: JSON.stringify(vm.post),
                 success: function (r) {
                     if (r.code === 200) {
                         toastr.success("操作成功!", function () {
@@ -190,9 +203,10 @@ var vm = new Vue({
                 vm.getDept();
             });
         },
-        getRoleList: function () {
-            $.get(baseURL + "sys/role/select", function (r) {
-                vm.roleList = r.list;
+        getCategoryList: function () {
+            $.get(baseURL + "article/category/select", function (r) {
+
+                // vm.categoryIdList = r.list;
             });
         },
         deptTree: function () {
@@ -224,14 +238,216 @@ var vm = new Vue({
                 page: page
             }).trigger("reloadGrid");
         },
-        switchEditor : function() {
+        // // 自动保存
+        // autoSave: function (callback) {
+        //     var $vm = this;
+        //     var content = $vm.post.customTpl === 'markdown' ? mditor.value : htmlEditor.summernote('code');
+        //     if ($vm.post.postTitle !== '' && content !== '') {
+        //         if ($vm.post.customTpl === 'markdown') {
+        //             $vm.post.postContentMd = content;
+        //         } else {
+        //             $vm.post.postContent = content;
+        //         }
+        //         $vm.article.categories = $vm.article.selected.join(',');
+        //
+        //         var url = $vm.article.cid !== '' ? '/admin/api/article/update' : '/admin/api/article/new';
+        //         tale.post({
+        //             url: url,
+        //             data: params,
+        //             success: function (result) {
+        //                 if (result && result.success) {
+        //                     $vm.article.cid = result.payload;
+        //                     callback && callback();
+        //                 } else {
+        //                     tale.alertError(result.msg || '保存文章失败');
+        //                 }
+        //             },
+        //             error: function (error) {
+        //                 console.log(error);
+        //                 clearInterval(refreshIntervalId);
+        //             }
+        //         });
+        //     }
+        // },
+        switchEditor : function(event) {
+            var type = this.post.customTpl;
+            var this_ = event.target;
+            if (type === 'markdown') {
+                // 切换为富文本编辑器
+                if ($('#md-container .markdown-body').html().length > 0) {
+                    $('#html-container .note-editable').empty().html($('#md-container .markdown-body').html());
+                    $('#html-container .note-placeholder').hide();
+                }
+                mditor.value = '';
+                $('#md-container').hide();
+                $('#html-container').show();
+
+                this_.customTpl = '切换为Markdown编辑器';
+
+                this.post.customTpl = 'html';
+            } else {
+                // 切换为markdown编辑器
+                if ($('#html-container .note-editable').html().length > 0) {
+                    mditor.value = '';
+                    mditor.value = toMarkdown($('#html-container .note-editable').html());
+                }
+                $('#html-container').hide();
+                $('#md-container').show();
+
+                this.post.customTpl = 'markdown';
+
+                this_.innerHTML = '切换为富文本编辑器';
+                htmlEditor.summernote("code", "");
+            }
 
         },
-        publish: function() {
-
-        }
 
 
 
     }
+});
+
+$(document).ready(function () {
+    $("#form_datetime").datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose: true,
+        todayBtn: true,
+        weekStart: 1,
+        language: 'zh-CN'
+    });
+
+    mditor = window.mditor = Mditor.fromTextarea(document.getElementById('md-editor'));
+    // 富文本编辑器
+    htmlEditor = $('.summernote').summernote({
+        lang: 'zh-CN',
+        height: 340,
+        placeholder: '写点儿什么吧...',
+        //上传图片的接口
+        callbacks: {
+            onImageUpload: function (files) {
+                var data = new FormData();
+                data.append('image_up', files[0]);
+                tale.showLoading();
+                $.ajax({
+                    url: '/admin/api/attach/upload',
+                    method: 'POST',
+                    data: data,
+                    processData: false,
+                    dataType: 'json',
+                    contentType: false,
+                    success: function (result) {
+                        tale.hideLoading();
+                        if (result && result.success) {
+                            var url = $('#attach_url').val() + result.payload[0].fkey;
+                            console.log('url =>' + url);
+                            htmlEditor.summernote('insertImage', url);
+                        } else {
+                            tale.alertError(result.msg || '图片上传失败');
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+    // Tags Input
+    $('#tags').tagsInput({
+        width: '100%',
+        height: '35px',
+        defaultText: '请输入文章标签'
+    });
+
+    $('#allowComment').toggles({
+        on: 1,
+        text: {
+            on: '开启',
+            off: '关闭'
+        }
+    });
+
+    $('#allowPing').toggles({
+        on: 1,
+        text: {
+            on: '开启',
+            off: '关闭'
+        }
+    });
+
+    $('#allowFeed').toggles({
+        on: 1,
+        text: {
+            on: '开启',
+            off: '关闭'
+        }
+    });
+
+    $('#addThumb').toggles({
+        on: 0,
+        text: {
+            on: '添加',
+            off: '取消'
+        }
+    });
+
+    $('#allowComment').on('toggle', function (e, active) {
+        vm.post.allowComment = 1;
+    });
+
+    $('#allowPing').on('toggle', function (e, active) {
+        vm.post.allowPing = 1;
+    });
+
+    $('#allowFeed').on('toggle', function (e, active) {
+        vm.post.allowFeed = 1;
+    });
+
+    $('#addThumb').on('toggle', function (e, active) {
+        if (active) {
+            $('#dropzone-container').removeClass('hide');
+            $('#dropzone-container').show();
+            var thumbImage = $("#dropzone").css("backgroundImage");
+            if(thumbImage && thumbImage.indexOf('url') !== -1){
+                thumbImage = thumbImage.split("(")[1].split(")")[0];
+                vm.post.postThumbnail = thumbImage.substring(1, thumbImage.length - 1);
+            }
+        } else {
+            $('#dropzone-container').addClass('hide');
+            vm.post.postThumbnail = '';
+        }
+    });
+
+    var thumbdropzone = $('.dropzone');
+
+    // 缩略图上传
+    $("#dropzone").dropzone({
+        url: "/123",
+        filesizeBase: 1024,//定义字节算法 默认1000
+        maxFilesize: '10', //MB
+        fallback: function () {
+            tale.alertError('暂不支持您的浏览器上传!');
+        },
+        acceptedFiles: 'image/*',
+        dictFileTooBig: '您的文件超过10MB!',
+        dictInvalidInputType: '不支持您上传的类型',
+        init: function () {
+            this.on('success', function (files, result) {
+                console.log("upload success..");
+                console.log(" result => " + result);
+                if (result && result.success) {
+                    var url = attach_url + result.payload[0].fkey;
+                    console.log('url => ' + url);
+
+                    vm.post.postThumbnail = url;
+                    thumbdropzone.css('background-image', 'url(' + url + ')');
+                    thumbdropzone.css('background-size', 'cover');
+                    $('.dz-image').hide();
+                }
+            });
+            this.on('error', function (a, errorMessage, result) {
+                if (!result.success && result.msg) {
+                    tale.alertError(result.msg || '缩略图上传失败');
+                }
+            });
+        }
+    });
 });
