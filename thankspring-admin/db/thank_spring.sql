@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50559
 File Encoding         : 65001
 
-Date: 2018-12-25 17:39:00
+Date: 2018-12-29 17:10:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -122,7 +122,7 @@ CREATE TABLE `article_link` (
 DROP TABLE IF EXISTS `article_post`;
 CREATE TABLE `article_post` (
   `post_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `post_title` varchar(255) NOT NULL COMMENT '文章标题',
+  `post_title` varchar(255) DEFAULT NULL COMMENT '文章标题',
   `post_type` varchar(255) DEFAULT NULL COMMENT '文章类型',
   `post_content_md` longtext COMMENT '文章内容 MarkDown',
   `post_content` longtext COMMENT '文章内容 HTML',
@@ -135,13 +135,51 @@ CREATE TABLE `article_post` (
   `allow_comment` int(11) DEFAULT NULL COMMENT '是否允许评论',
   `custom_tpl` varchar(255) DEFAULT NULL COMMENT '指定渲染模板',
   `user_id` bigint(20) DEFAULT NULL COMMENT '提交用户',
+  `allow_ping` int(11) DEFAULT NULL COMMENT '是否允许Ping',
+  `allow_feed` int(11) DEFAULT NULL COMMENT '是否允许Feed',
   PRIMARY KEY (`post_id`),
   UNIQUE KEY `post_title` (`post_title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='文章';
 
 -- ----------------------------
 -- Records of article_post
 -- ----------------------------
+INSERT INTO `article_post` VALUES ('1', '11111', null, null, null, '11111', null, null, null, '0', null, null, 'markdown', null, null, null);
+INSERT INTO `article_post` VALUES ('2', '1111', null, '1111111111111111111', null, '1111', null, null, null, '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('3', '11', null, '111111', null, '111', null, null, null, '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('5', '1111111111111111', null, '1111111111111111', null, '11111111111111111111', null, null, null, '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('6', 'admin', null, '1111111111111111111111111', null, 'admin1', null, null, null, '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('7', '111111', null, '1111111111111111111111111111111111', '', '1111', null, null, null, '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('9', '1111111111111111111111111111111111111111111111', null, '11111111111111111111111111111', '', '1111', null, null, null, '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('10', null, null, '', '', null, null, null, null, '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('13', '11111111111111111111111111111111111111111111111', null, '', '', null, null, '2018-12-29 13:03:34', '2018-12-29 13:03:34', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('14', null, null, '', '', null, null, '2018-12-29 13:05:15', '2018-12-29 13:05:15', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('15', null, null, '', '', null, null, '2018-12-29 13:06:04', '2018-12-29 13:06:04', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('16', null, null, '', '', null, null, '2018-12-29 13:09:04', '2018-12-29 13:09:04', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('17', null, null, '', '', null, null, '2018-12-29 13:10:42', '2018-12-29 13:10:42', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('18', null, null, '', '', null, null, '2018-12-29 13:13:37', '2018-12-29 13:13:37', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('19', null, null, '', '', null, null, '2018-12-29 13:14:52', '2018-12-29 13:14:52', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('20', null, null, '', '', null, null, '2018-12-29 13:16:21', '2018-12-29 13:16:21', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('22', null, null, '', '', null, null, '2018-12-29 13:19:27', '2018-12-29 13:19:27', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('23', null, null, '', '', null, null, '2018-12-29 13:23:05', '2018-12-29 13:23:05', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('24', null, null, '', '', null, null, '2018-12-29 13:27:01', '2018-12-29 13:27:01', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('25', null, null, '', '', null, null, '2018-12-29 13:27:27', '2018-12-29 13:27:27', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('26', null, null, '', '', null, null, '2018-12-29 13:28:52', '2018-12-29 13:28:52', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('27', null, null, '', '', null, null, '2018-12-29 13:32:52', '2018-12-29 13:32:52', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('28', null, null, '', '', null, null, '2018-12-29 13:33:57', '2018-12-29 13:33:57', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('29', null, null, '', '', null, null, '2018-12-29 13:44:03', '2018-12-29 13:44:03', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('30', null, null, '', '', null, null, '2018-12-29 13:44:40', '2018-12-29 13:44:40', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('33', null, null, '', '', null, null, '2018-12-29 13:50:53', '2018-12-29 13:50:53', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('34', null, null, '', '', null, null, '2018-12-29 13:54:19', '2018-12-29 13:54:19', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('35', null, null, '', '', null, null, '2018-12-29 14:03:01', '2018-12-29 14:03:01', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('36', null, null, '', '', null, null, '2018-12-29 14:03:13', '2018-12-29 14:03:13', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('37', null, null, '', '', null, null, '2018-12-29 14:04:37', '2018-12-29 14:04:37', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('38', null, null, '', '', null, null, '2018-12-29 14:40:54', '2018-12-29 14:40:54', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('39', null, null, '', '', null, null, '2018-12-29 14:43:03', '2018-12-29 14:43:03', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('40', null, null, '', '', null, null, '2018-12-29 14:43:16', '2018-12-29 14:43:16', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('41', null, null, '', '', null, null, '2018-12-29 14:57:41', '2018-12-29 14:57:41', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('42', null, null, '', '', null, null, '2018-12-29 14:58:11', '2018-12-29 14:58:11', '0', null, '1', 'markdown', null, '1', '1');
+INSERT INTO `article_post` VALUES ('43', null, null, '', '', null, null, '2018-12-29 15:00:22', '2018-12-29 15:00:22', '0', null, '1', 'markdown', null, '1', '1');
 
 -- ----------------------------
 -- Table structure for article_post_category
@@ -167,11 +205,81 @@ CREATE TABLE `article_post_tag` (
   `post_id` bigint(20) DEFAULT NULL COMMENT '文章ID',
   `tag_id` bigint(20) DEFAULT NULL COMMENT '标签ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章与标签对应关系';
+) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8 COMMENT='文章与标签对应关系';
 
 -- ----------------------------
 -- Records of article_post_tag
 -- ----------------------------
+INSERT INTO `article_post_tag` VALUES ('56', '22', '32');
+INSERT INTO `article_post_tag` VALUES ('57', '22', '33');
+INSERT INTO `article_post_tag` VALUES ('58', '23', '32');
+INSERT INTO `article_post_tag` VALUES ('59', '23', '34');
+INSERT INTO `article_post_tag` VALUES ('60', '23', '36');
+INSERT INTO `article_post_tag` VALUES ('61', '23', '36');
+INSERT INTO `article_post_tag` VALUES ('62', '24', '37');
+INSERT INTO `article_post_tag` VALUES ('63', '24', '38');
+INSERT INTO `article_post_tag` VALUES ('64', '25', '37');
+INSERT INTO `article_post_tag` VALUES ('65', '25', '38');
+INSERT INTO `article_post_tag` VALUES ('66', '25', '39');
+INSERT INTO `article_post_tag` VALUES ('67', '25', '40');
+INSERT INTO `article_post_tag` VALUES ('68', '26', '37');
+INSERT INTO `article_post_tag` VALUES ('69', '26', '38');
+INSERT INTO `article_post_tag` VALUES ('70', '26', '39');
+INSERT INTO `article_post_tag` VALUES ('71', '26', '40');
+INSERT INTO `article_post_tag` VALUES ('72', '26', '41');
+INSERT INTO `article_post_tag` VALUES ('73', '26', '42');
+INSERT INTO `article_post_tag` VALUES ('74', '26', '43');
+INSERT INTO `article_post_tag` VALUES ('75', '26', '44');
+INSERT INTO `article_post_tag` VALUES ('76', '27', '45');
+INSERT INTO `article_post_tag` VALUES ('77', '27', '46');
+INSERT INTO `article_post_tag` VALUES ('78', '28', '45');
+INSERT INTO `article_post_tag` VALUES ('79', '28', '46');
+INSERT INTO `article_post_tag` VALUES ('80', '28', '47');
+INSERT INTO `article_post_tag` VALUES ('81', '28', '48');
+INSERT INTO `article_post_tag` VALUES ('82', '29', '49');
+INSERT INTO `article_post_tag` VALUES ('83', '29', '50');
+INSERT INTO `article_post_tag` VALUES ('84', '30', '49');
+INSERT INTO `article_post_tag` VALUES ('85', '30', '50');
+INSERT INTO `article_post_tag` VALUES ('86', '30', '51');
+INSERT INTO `article_post_tag` VALUES ('87', '30', '52');
+INSERT INTO `article_post_tag` VALUES ('88', '33', '53');
+INSERT INTO `article_post_tag` VALUES ('89', '33', '54');
+INSERT INTO `article_post_tag` VALUES ('90', '34', '53');
+INSERT INTO `article_post_tag` VALUES ('91', '34', '54');
+INSERT INTO `article_post_tag` VALUES ('92', '34', '55');
+INSERT INTO `article_post_tag` VALUES ('93', '34', '56');
+INSERT INTO `article_post_tag` VALUES ('94', '35', '57');
+INSERT INTO `article_post_tag` VALUES ('95', '35', '58');
+INSERT INTO `article_post_tag` VALUES ('96', '36', '57');
+INSERT INTO `article_post_tag` VALUES ('97', '36', '58');
+INSERT INTO `article_post_tag` VALUES ('98', '36', '59');
+INSERT INTO `article_post_tag` VALUES ('99', '36', '60');
+INSERT INTO `article_post_tag` VALUES ('100', '37', '61');
+INSERT INTO `article_post_tag` VALUES ('101', '37', '62');
+INSERT INTO `article_post_tag` VALUES ('102', '37', '63');
+INSERT INTO `article_post_tag` VALUES ('103', '37', '64');
+INSERT INTO `article_post_tag` VALUES ('104', '37', '65');
+INSERT INTO `article_post_tag` VALUES ('105', '37', '66');
+INSERT INTO `article_post_tag` VALUES ('106', '37', '67');
+INSERT INTO `article_post_tag` VALUES ('107', '37', '68');
+INSERT INTO `article_post_tag` VALUES ('108', '38', '61');
+INSERT INTO `article_post_tag` VALUES ('109', '38', '62');
+INSERT INTO `article_post_tag` VALUES ('110', '38', '63');
+INSERT INTO `article_post_tag` VALUES ('111', '38', '64');
+INSERT INTO `article_post_tag` VALUES ('112', '38', '65');
+INSERT INTO `article_post_tag` VALUES ('113', '38', '66');
+INSERT INTO `article_post_tag` VALUES ('114', '38', '67');
+INSERT INTO `article_post_tag` VALUES ('115', '38', '68');
+INSERT INTO `article_post_tag` VALUES ('116', '39', '69');
+INSERT INTO `article_post_tag` VALUES ('117', '39', '70');
+INSERT INTO `article_post_tag` VALUES ('118', '40', '69');
+INSERT INTO `article_post_tag` VALUES ('119', '40', '70');
+INSERT INTO `article_post_tag` VALUES ('120', '41', '69');
+INSERT INTO `article_post_tag` VALUES ('121', '41', '70');
+INSERT INTO `article_post_tag` VALUES ('122', '42', '69');
+INSERT INTO `article_post_tag` VALUES ('123', '42', '70');
+INSERT INTO `article_post_tag` VALUES ('124', '43', '69');
+INSERT INTO `article_post_tag` VALUES ('125', '43', '70');
 
 -- ----------------------------
 -- Table structure for article_tag
@@ -182,11 +290,13 @@ CREATE TABLE `article_tag` (
   `tag_name` varchar(255) DEFAULT NULL COMMENT '标签名称',
   `tag_url` varchar(255) DEFAULT NULL COMMENT '标签Url',
   PRIMARY KEY (`tag_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='标签';
+) ENGINE=MyISAM AUTO_INCREMENT=71 DEFAULT CHARSET=utf8 COMMENT='标签';
 
 -- ----------------------------
 -- Records of article_tag
 -- ----------------------------
+INSERT INTO `article_tag` VALUES ('69', '1111', null);
+INSERT INTO `article_tag` VALUES ('70', '2222', null);
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -225,7 +335,7 @@ CREATE TABLE `sys_log` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='系统日志';
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COMMENT='系统日志';
 
 -- ----------------------------
 -- Records of sys_log
@@ -269,6 +379,21 @@ INSERT INTO `sys_log` VALUES ('36', 'admin', '保存菜单', 'top.wycfight.thank
 INSERT INTO `sys_log` VALUES ('37', 'admin', '保存菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,save()', '{\"menuId\":42,\"parentId\":41,\"parentName\":\"博客管理\",\"name\":\"文章\",\"url\":\"blog/post/list\",\"perms\":\"blog:post:list\",\"type\":1,\"icon\":\"fa fa-book\",\"orderNum\":0}', '231', '0:0:0:0:0:0:0:1', '2018-12-25 09:55:39', '2018-12-25 09:55:39');
 INSERT INTO `sys_log` VALUES ('38', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":42,\"parentId\":41,\"parentName\":\"博客管理\",\"name\":\"文章\",\"url\":\"blog/post/list.html\",\"perms\":\"blog:post:list\",\"type\":1,\"icon\":\"fa fa-book\",\"orderNum\":0}', '20', '0:0:0:0:0:0:0:1', '2018-12-25 09:56:18', '2018-12-25 09:56:18');
 INSERT INTO `sys_log` VALUES ('39', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":42,\"parentId\":41,\"parentName\":\"博客管理\",\"name\":\"文章\",\"url\":\"blog/post/list.html\",\"perms\":\"\",\"type\":1,\"icon\":\"fa fa-book\",\"orderNum\":0}', '11', '0:0:0:0:0:0:0:1', '2018-12-25 09:57:47', '2018-12-25 09:57:47');
+INSERT INTO `sys_log` VALUES ('40', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":42,\"parentId\":41,\"parentName\":\"博客管理\",\"name\":\"文章\",\"url\":\"admin/article/new.html\",\"perms\":\"\",\"type\":1,\"icon\":\"fa fa-book\",\"orderNum\":0}', '27', '0:0:0:0:0:0:0:1', '2018-12-26 16:10:50', '2018-12-26 16:10:50');
+INSERT INTO `sys_log` VALUES ('41', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":42,\"parentId\":41,\"parentName\":\"博客管理\",\"name\":\"发布文章\",\"url\":\"admin/article/new.html\",\"perms\":\"\",\"type\":1,\"icon\":\"fa fa-book\",\"orderNum\":0}', '31', '0:0:0:0:0:0:0:1', '2018-12-26 16:13:48', '2018-12-26 16:13:48');
+INSERT INTO `sys_log` VALUES ('42', 'admin', '保存菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,save()', '{\"menuId\":43,\"parentId\":42,\"parentName\":\"发布文章\",\"name\":\"查看\",\"perms\":\"admin:article:new:list\",\"type\":2,\"orderNum\":0}', '13', '0:0:0:0:0:0:0:1', '2018-12-26 16:40:14', '2018-12-26 16:40:14');
+INSERT INTO `sys_log` VALUES ('43', 'admin', '保存菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,save()', '{\"menuId\":44,\"parentId\":42,\"parentName\":\"发布文章\",\"name\":\"新增\",\"perms\":\"admin:article:new:save\",\"type\":2,\"orderNum\":0}', '12', '0:0:0:0:0:0:0:1', '2018-12-26 16:40:45', '2018-12-26 16:40:45');
+INSERT INTO `sys_log` VALUES ('44', 'admin', '保存菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,save()', '{\"menuId\":45,\"parentId\":42,\"parentName\":\"发布文章\",\"name\":\"修改\",\"perms\":\"admin:article:new:update\",\"type\":2,\"orderNum\":0}', '14', '0:0:0:0:0:0:0:1', '2018-12-26 16:41:08', '2018-12-26 16:41:08');
+INSERT INTO `sys_log` VALUES ('45', 'admin', '保存菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,save()', '{\"menuId\":46,\"parentId\":42,\"parentName\":\"发布文章\",\"name\":\"删除\",\"perms\":\"admin:article:new:delete\",\"type\":2,\"orderNum\":0}', '12', '0:0:0:0:0:0:0:1', '2018-12-26 16:41:26', '2018-12-26 16:41:26');
+INSERT INTO `sys_log` VALUES ('46', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":42,\"parentId\":41,\"parentName\":\"博客管理\",\"name\":\"发布文章\",\"url\":\"admin/article/post.html\",\"perms\":\"\",\"type\":1,\"icon\":\"fa fa-book\",\"orderNum\":0}', '37', '0:0:0:0:0:0:0:1', '2018-12-27 10:39:13', '2018-12-27 10:39:13');
+INSERT INTO `sys_log` VALUES ('47', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":43,\"parentId\":42,\"parentName\":\"发布文章\",\"name\":\"查看\",\"perms\":\"article:post:list\",\"type\":2,\"orderNum\":0}', '11', '0:0:0:0:0:0:0:1', '2018-12-27 10:39:28', '2018-12-27 10:39:28');
+INSERT INTO `sys_log` VALUES ('48', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":44,\"parentId\":42,\"parentName\":\"发布文章\",\"name\":\"新增\",\"perms\":\"article:post:save\",\"type\":2,\"orderNum\":0}', '11', '0:0:0:0:0:0:0:1', '2018-12-27 10:39:44', '2018-12-27 10:39:44');
+INSERT INTO `sys_log` VALUES ('49', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":45,\"parentId\":42,\"parentName\":\"发布文章\",\"name\":\"修改\",\"perms\":\"article:post:update\",\"type\":2,\"orderNum\":0}', '9', '0:0:0:0:0:0:0:1', '2018-12-27 10:39:54', '2018-12-27 10:39:54');
+INSERT INTO `sys_log` VALUES ('50', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":46,\"parentId\":42,\"parentName\":\"发布文章\",\"name\":\"删除\",\"perms\":\"article:post:delete\",\"type\":2,\"orderNum\":0}', '10', '0:0:0:0:0:0:0:1', '2018-12-27 10:40:05', '2018-12-27 10:40:05');
+INSERT INTO `sys_log` VALUES ('51', 'admin', '删除角色', 'top.wycfight.thankspring.modules.sys.controller.SysRoleController,delete()', '[4]', '48', '0:0:0:0:0:0:0:1', '2018-12-27 13:52:10', '2018-12-27 13:52:10');
+INSERT INTO `sys_log` VALUES ('52', 'admin', '保存菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,save()', '{\"menuId\":47,\"parentId\":41,\"parentName\":\"博客管理\",\"name\":\"其他设置\",\"type\":0,\"icon\":\"fa fa-wrench\",\"orderNum\":0}', '28', '0:0:0:0:0:0:0:1', '2018-12-28 16:22:13', '2018-12-28 16:22:13');
+INSERT INTO `sys_log` VALUES ('53', 'admin', '保存菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,save()', '{\"menuId\":48,\"parentId\":47,\"parentName\":\"其他设置\",\"name\":\"分类/标签\",\"url\":\"/article/category/list\",\"type\":1,\"icon\":\"fa fa-paper-plane-o\",\"orderNum\":0}', '10', '0:0:0:0:0:0:0:1', '2018-12-28 16:24:34', '2018-12-28 16:24:34');
+INSERT INTO `sys_log` VALUES ('54', 'admin', '更新菜单', 'top.wycfight.thankspring.modules.sys.controller.SysMenuController,update()', '{\"menuId\":44,\"parentId\":42,\"parentName\":\"发布文章\",\"name\":\"新增\",\"perms\":\"article:post:save,article:category:select\",\"type\":2,\"orderNum\":0}', '24', '0:0:0:0:0:0:0:1', '2018-12-28 16:25:10', '2018-12-28 16:25:10');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -284,7 +409,7 @@ CREATE TABLE `sys_menu` (
   `icon` varchar(50) DEFAULT NULL COMMENT '菜单图标',
   `order_num` int(11) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
 
 -- ----------------------------
 -- Records of sys_menu
@@ -319,7 +444,13 @@ INSERT INTO `sys_menu` VALUES ('38', '36', '新增', null, 'sys:dict:save', '2',
 INSERT INTO `sys_menu` VALUES ('39', '36', '修改', null, 'sys:dict:update', '2', null, '6');
 INSERT INTO `sys_menu` VALUES ('40', '36', '删除', null, 'sys:dict:delete', '2', null, '6');
 INSERT INTO `sys_menu` VALUES ('41', '0', '博客管理', null, null, '0', 'fa fa-heart', '1');
-INSERT INTO `sys_menu` VALUES ('42', '41', '文章', 'blog/post/list.html', '', '1', 'fa fa-book', '0');
+INSERT INTO `sys_menu` VALUES ('42', '41', '发布文章', 'admin/article/post.html', '', '1', 'fa fa-book', '0');
+INSERT INTO `sys_menu` VALUES ('43', '42', '查看', null, 'article:post:list', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('44', '42', '新增', null, 'article:post:save,article:category:select', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('45', '42', '修改', null, 'article:post:update', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('46', '42', '删除', null, 'article:post:delete', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('47', '41', '其他设置', null, null, '0', 'fa fa-wrench', '0');
+INSERT INTO `sys_menu` VALUES ('48', '47', '分类/标签', '/article/category/list', null, '1', 'fa fa-paper-plane-o', '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -333,12 +464,11 @@ CREATE TABLE `sys_role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('4', '123213', '213213213', '1', '2018-12-20 11:02:38', '2018-12-20 11:02:38');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -349,40 +479,11 @@ CREATE TABLE `sys_role_menu` (
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
   `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
 
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES ('175', '4', '1');
-INSERT INTO `sys_role_menu` VALUES ('176', '4', '2');
-INSERT INTO `sys_role_menu` VALUES ('177', '4', '15');
-INSERT INTO `sys_role_menu` VALUES ('178', '4', '16');
-INSERT INTO `sys_role_menu` VALUES ('179', '4', '17');
-INSERT INTO `sys_role_menu` VALUES ('180', '4', '18');
-INSERT INTO `sys_role_menu` VALUES ('181', '4', '3');
-INSERT INTO `sys_role_menu` VALUES ('182', '4', '19');
-INSERT INTO `sys_role_menu` VALUES ('183', '4', '20');
-INSERT INTO `sys_role_menu` VALUES ('184', '4', '21');
-INSERT INTO `sys_role_menu` VALUES ('185', '4', '22');
-INSERT INTO `sys_role_menu` VALUES ('186', '4', '4');
-INSERT INTO `sys_role_menu` VALUES ('187', '4', '23');
-INSERT INTO `sys_role_menu` VALUES ('188', '4', '24');
-INSERT INTO `sys_role_menu` VALUES ('189', '4', '25');
-INSERT INTO `sys_role_menu` VALUES ('190', '4', '26');
-INSERT INTO `sys_role_menu` VALUES ('191', '4', '5');
-INSERT INTO `sys_role_menu` VALUES ('192', '4', '27');
-INSERT INTO `sys_role_menu` VALUES ('193', '4', '29');
-INSERT INTO `sys_role_menu` VALUES ('194', '4', '31');
-INSERT INTO `sys_role_menu` VALUES ('195', '4', '32');
-INSERT INTO `sys_role_menu` VALUES ('196', '4', '33');
-INSERT INTO `sys_role_menu` VALUES ('197', '4', '34');
-INSERT INTO `sys_role_menu` VALUES ('198', '4', '35');
-INSERT INTO `sys_role_menu` VALUES ('199', '4', '36');
-INSERT INTO `sys_role_menu` VALUES ('200', '4', '37');
-INSERT INTO `sys_role_menu` VALUES ('201', '4', '38');
-INSERT INTO `sys_role_menu` VALUES ('202', '4', '39');
-INSERT INTO `sys_role_menu` VALUES ('203', '4', '40');
 
 -- ----------------------------
 -- Table structure for sys_user

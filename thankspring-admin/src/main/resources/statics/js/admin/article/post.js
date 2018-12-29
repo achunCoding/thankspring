@@ -54,21 +54,7 @@ $(function () {
         }
     });
 });
-var setting = {
-    data: {
-        simpleData: {
-            enable: true,
-            idKey: "deptId",
-            pIdKey: "parentId",
-            rootPId: -1
-        },
-        key: {
-            url: "nourl"
-        }
-    }
-};
 var mditor, htmlEditor;
-var ztree;
 var refreshIntervalId;
 Vue.component('v-select', VueSelect.VueSelect);
 Dropzone.autoDiscover = false;
@@ -80,24 +66,21 @@ var vm = new Vue({
             postStatus: "",
             category: ""
         },
-        categories: [],
         showList: true,
         title: null,
 
         post: {
-            created: moment().unix(),
-            createdTime: moment().format('YYYY-MM-DD HH:mm'),
             customTpl: 'markdown',
-            tagNameList:[],
-            categoryIdList:[],
             postStatus:1,
             allowComment: 1,
             allowPing: 1,
             allowFeed: 1,
+            postContentMd:'',
+            postContent:'',
+            postStatus:'',
+            tagNameList:[]
+
         },
-    },
-    mounted: function () {
-        refreshIntervalId = setInterval("vm.autoSave()", 10 * 1000);
     },
     methods: {
         query: function () {
@@ -106,24 +89,19 @@ var vm = new Vue({
         add: function () {
             vm.showList = false;
             vm.title = "新增";
-            vm.roleList = {};
-            vm.user = {deptName: null, deptId: null, status: 1, roleIdList: []};
-            vm.showPassword = true;
-            //获取角色信息
+            vm.post = {
+                customTpl: 'markdown',
+                postStatus:1,
+                allowComment: 1,
+                allowPing: 1,
+                allowFeed: 1,
+                postContentMd:'',
+                postContent:'',
+                postStatus:'',
+                tagNameList:[]
+                };
+            //获取分类信息
             this.getCategoryList();
-            // 获取部门信息
-            vm.getDept();
-        },
-        getDept: function () {
-            //加载部门树
-            $.get(baseURL + "sys/dept/list", function (r) {
-                ztree = $.fn.zTree.init($("#deptTree"), setting, r);
-                var node = ztree.getNodeByParam("deptId", vm.user.deptId);
-                if (node != null) {
-                    ztree.selectNode(node);
-                    vm.user.deptName = node.name;
-                }
-            })
         },
         update: function () {
             var userId = getSelectedRow();
@@ -179,6 +157,9 @@ var vm = new Vue({
             }
             var url = vm.post.postId == null ? "article/post/save" : "article/post/update";
             vm.post.postStatus = status;
+            var value = $('#tags').val();
+            vm.post.tagNameList = value.split(",");
+            console.log(value);
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
@@ -238,37 +219,6 @@ var vm = new Vue({
                 page: page
             }).trigger("reloadGrid");
         },
-        // // 自动保存
-        // autoSave: function (callback) {
-        //     var $vm = this;
-        //     var content = $vm.post.customTpl === 'markdown' ? mditor.value : htmlEditor.summernote('code');
-        //     if ($vm.post.postTitle !== '' && content !== '') {
-        //         if ($vm.post.customTpl === 'markdown') {
-        //             $vm.post.postContentMd = content;
-        //         } else {
-        //             $vm.post.postContent = content;
-        //         }
-        //         $vm.article.categories = $vm.article.selected.join(',');
-        //
-        //         var url = $vm.article.cid !== '' ? '/admin/api/article/update' : '/admin/api/article/new';
-        //         tale.post({
-        //             url: url,
-        //             data: params,
-        //             success: function (result) {
-        //                 if (result && result.success) {
-        //                     $vm.article.cid = result.payload;
-        //                     callback && callback();
-        //                 } else {
-        //                     tale.alertError(result.msg || '保存文章失败');
-        //                 }
-        //             },
-        //             error: function (error) {
-        //                 console.log(error);
-        //                 clearInterval(refreshIntervalId);
-        //             }
-        //         });
-        //     }
-        // },
         switchEditor : function(event) {
             var type = this.post.customTpl;
             var this_ = event.target;
@@ -308,13 +258,6 @@ var vm = new Vue({
 });
 
 $(document).ready(function () {
-    $("#form_datetime").datetimepicker({
-        format: 'yyyy-mm-dd hh:ii',
-        autoclose: true,
-        todayBtn: true,
-        weekStart: 1,
-        language: 'zh-CN'
-    });
 
     mditor = window.mditor = Mditor.fromTextarea(document.getElementById('md-editor'));
     // 富文本编辑器
