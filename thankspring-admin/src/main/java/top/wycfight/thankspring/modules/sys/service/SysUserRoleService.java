@@ -17,11 +17,26 @@ public interface SysUserRoleService extends IService<SysUserRoleEntity> {
      * @param userId 用户ID
      * @return
      */
-    List<Long>  queryRoleIdList(Long userId);
+    List<Long> queryRoleIdList(Long userId);
 
     /**
      * 通过角色ID 删除与用户对应的关系
      * @param roleIds
      */
-    void deleteBatch(Long[] roleIds);
+    int deleteBatch(Long[] roleIds);
+
+    /**
+     * 保存用户和角色之间的关系
+     * @param userId 用户ID
+     * @param roleIdList 角色IDS
+     */
+    void saveOrUpdate(Long userId, List<Long> roleIdList);
+
+
+    /**
+     * 根据用户ID 数组，批量删除
+     * @param userIds
+     * @return
+     */
+    int deleteBatchByUserIds(Long[] userIds);
 }

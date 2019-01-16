@@ -27,14 +27,14 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
       connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       use-global-data-source-stat: true
-      filters:
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+      filter:
         stat:
           log-slow-sql: true
-          low-sql-millis: 1000
+          slow-sql-millis: 1000
           merge-sql: false
-        wall:
-          config:
-            multi-statement-allow: true
-      stat-view-servlet:
-        login-username: admin
-        login-password: 123456
+      wall:
+        config:
+          multi-statement-allow: true

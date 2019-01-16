@@ -78,7 +78,8 @@ public class SysUserController extends AbstractController {
         if(ArrayUtils.contains(userIds, getUserId())){
             return ResultData.error("当前用户不能删除");
         }
-
+        // 删除用户 应该删除和部门 和角色之间的关联
+        sysUserRoleService.deleteBatchByUserIds(userIds);
         sysUserService.deleteBatchIds(Arrays.asList(userIds));
         return ResultData.ok();
     }

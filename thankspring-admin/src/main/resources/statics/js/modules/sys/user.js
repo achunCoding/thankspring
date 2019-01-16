@@ -71,7 +71,7 @@ var vm = new Vue({
             username: null
         },
 
-        showPassword: null,
+        showPassword: true,
         showList: true,
         title: null,
         roleList: {},
@@ -116,6 +116,7 @@ var vm = new Vue({
 
             vm.showList = false;
             vm.title = "修改";
+            vm.showPassword = false;
 
             vm.getUser(userId);
             //获取角色信息
@@ -173,8 +174,6 @@ var vm = new Vue({
         getUser: function (userId) {
             $.get(baseURL + "sys/user/info/" + userId, function (r) {
                 vm.user = r.user;
-                vm.showPassword = false;
-
                 vm.getDept();
             });
         },
@@ -227,10 +226,14 @@ var vm = new Vue({
                 return true;
             }
             // 密码
-            if (isBlank(vm.user.password)) {
-                toastr.warning("密码不能为空");
-                return true;
+            if (vm.showPassword === true) {
+                if (isBlank(vm.user.password)) {
+                    toastr.warning("密码不能为空");
+                    return true;
+                }
+
             }
+
             // 邮箱
             if (isBlank(vm.user.email)) {
                 toastr.warning("邮箱不能为空");

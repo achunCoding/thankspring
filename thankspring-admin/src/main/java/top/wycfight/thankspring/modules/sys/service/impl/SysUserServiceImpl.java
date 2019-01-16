@@ -18,6 +18,7 @@ import top.wycfight.thankspring.modules.sys.mapper.SysMenuMapper;
 import top.wycfight.thankspring.modules.sys.mapper.SysUserMapper;
 import top.wycfight.thankspring.modules.sys.service.SysDeptService;
 import top.wycfight.thankspring.modules.sys.service.SysMenuService;
+import top.wycfight.thankspring.modules.sys.service.SysUserRoleService;
 import top.wycfight.thankspring.modules.sys.service.SysUserService;
 import top.wycfight.thankspring.modules.sys.shiro.ShiroUtils;
 
@@ -36,6 +37,9 @@ import java.util.Map;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements SysUserService {
     @Autowired
     private SysDeptService sysDeptService;
+
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -72,15 +76,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         user.setPassword(ShiroUtils.sha256(user.getPassword(), user.getSalt()));
         this.insert(user);
         //TODO 保存用户和角色之间的关系
+        sysUserRoleService.saveOrUpdate(user.getUserId(),user.getRoleIdList());
     }
 
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(SysUserEntity user) {
+        if (!StringUtils.isBlank(user.getPassword())) {
+            user.setPassword(ShiroUtils.sha256(user.getPassword(),user.getSalt()));
+        }
         user.setUpdateTime(new Date());
         this.updateById(user);
-        //TODO 保存用户和角色之间的关系
+        // 保存用户和角色之间的关系
+        sysUserRoleService.saveOrUpdate(user.getUserId(),user.getRoleIdList());
     }
 
     @Override

@@ -12,6 +12,7 @@ import top.wycfight.common.validator.group.UpdateGroup;
 import top.wycfight.thankspring.common.annotation.SysLog;
 import top.wycfight.thankspring.modules.sys.bean.SysRoleEntity;
 import top.wycfight.thankspring.modules.sys.service.SysDeptService;
+import top.wycfight.thankspring.modules.sys.service.SysRoleDeptService;
 import top.wycfight.thankspring.modules.sys.service.SysRoleMenuService;
 import top.wycfight.thankspring.modules.sys.service.SysRoleService;
 
@@ -34,6 +35,9 @@ public class SysRoleController extends AbstractController {
     private SysRoleMenuService sysRoleMenuService;
     @Autowired
     private SysDeptService sysDeptService;
+
+    @Autowired
+    private SysRoleDeptService sysRoleDeptService;
 
     /**
      * 查询所有角色列表
@@ -86,7 +90,10 @@ public class SysRoleController extends AbstractController {
         SysRoleEntity sysRoleEntity = sysRoleService.selectById(roleId);
         // 查询出来所有的菜单ID
         List<Long> menuIds = sysRoleMenuService.queryMenuIdListByRoleId(roleId);
+        // 查询出来所有的部门ID
+        List<Long> deptIds = sysRoleDeptService.queryDeptIdListByRoleId(roleId);
         sysRoleEntity.setMenuIdList(menuIds);
+        sysRoleEntity.setDeptIdList(deptIds);
         sysRoleEntity.setDeptName(sysDeptService.selectById(sysRoleEntity.getDeptId()).getName());
         // 查询出来所有的部门ID根据角色ID
         return ResultData.ok().put("role", sysRoleEntity);

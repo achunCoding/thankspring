@@ -5,8 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import top.wycfight.thankspring.common.config.GeetestConfig01;
-import top.wycfight.thankspring.common.config.GeetestConfig02;
 import top.wycfight.thankspring.modules.sys.sdk.GeetestLib;
 
 import javax.servlet.http.HttpServletRequest;

@@ -14,10 +14,7 @@ import top.wycfight.thankspring.common.utils.Query;
 import top.wycfight.thankspring.modules.sys.bean.SysDeptEntity;
 import top.wycfight.thankspring.modules.sys.bean.SysRoleEntity;
 import top.wycfight.thankspring.modules.sys.mapper.SysRoleMapper;
-import top.wycfight.thankspring.modules.sys.service.SysDeptService;
-import top.wycfight.thankspring.modules.sys.service.SysRoleMenuService;
-import top.wycfight.thankspring.modules.sys.service.SysRoleService;
-import top.wycfight.thankspring.modules.sys.service.SysUserRoleService;
+import top.wycfight.thankspring.modules.sys.service.*;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -40,6 +37,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRoleEntity>
 
     @Autowired
     private SysUserRoleService sysUserRoleService;
+
+    @Autowired
+    private SysRoleDeptService sysRoleDeptService;
 
 
     @Override
@@ -68,6 +68,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRoleEntity>
         // 保存role menu 之间的关系
         sysRoleMenuService.saveOrUpdate(sysRoleEntity.getRoleId(), sysRoleEntity.getMenuIdList());
         // 保存role dept之间的关系
+        sysRoleDeptService.saveOrUpdate(sysRoleEntity.getRoleId(),sysRoleEntity.getDeptIdList());
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -78,6 +79,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRoleEntity>
         this.updateAllColumnById(sysRoleEntity);
         // 保存role menu 之间的关系
         sysRoleMenuService.saveOrUpdate(sysRoleEntity.getRoleId(), sysRoleEntity.getMenuIdList());
+        // 保存role dept 之间的关系
+        sysRoleDeptService.saveOrUpdate(sysRoleEntity.getRoleId(), sysRoleEntity.getDeptIdList());
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -90,7 +93,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRoleEntity>
         sysUserRoleService.deleteBatch(roleIds);
         // 删除角色和菜单之间的关系
         sysRoleMenuService.deleteBatch(roleIds);
-        // TODO 删除角色和部门之间的关系
+        // 删除角色和部门之间的关系
+        sysRoleDeptService.deleteBatch(roleIds);
 
 
     }

@@ -12,4 +12,11 @@
             #{roleId}
         </foreach>
     </delete>
+
+    <delete id="deleteBatchByUserIds" parameterType="long">
+        DELETE FROM sys_user_role WHERE user_id in
+        <foreach collection="array" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
 </mapper>
