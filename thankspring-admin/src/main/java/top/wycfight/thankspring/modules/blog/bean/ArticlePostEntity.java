@@ -64,6 +64,9 @@ public class ArticlePostEntity implements Serializable {
     /** 分类ID */
     @TableField(exist = false)
     private List<Long> categoryIdList;
+    /** 标签ID */
+    @TableField(exist = false)
+    private List<Long> tagIdList;
 
 
     /**
@@ -370,6 +373,22 @@ public class ArticlePostEntity implements Serializable {
         this.allowFeed = allowFeed;
     }
 
+    /**
+     * 获取： 标签ID
+     * @return
+     */
+    public List<Long> getTagIdList() {
+        return tagIdList;
+    }
+
+    /**
+     * 设置：标签ID
+     * @param tagIdList
+     */
+    public void setTagIdList(List<Long> tagIdList) {
+        this.tagIdList = tagIdList;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -388,6 +407,7 @@ public class ArticlePostEntity implements Serializable {
                 ", 是否 允许评价=" + allowComment +
                 ", 指定渲染模板='" + customTpl + '\'' +
                 ",分类名称'=" + sortName +
+                ",标签ID=" + tagIdList +
                 '}';
     }
 }

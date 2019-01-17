@@ -7,10 +7,12 @@ import top.wycfight.common.utils.PageUtils;
 import top.wycfight.common.utils.ResultData;
 import top.wycfight.common.validator.ValidatorUtils;
 import top.wycfight.common.validator.group.AddGroup;
+import top.wycfight.thankspring.common.annotation.SysLog;
 import top.wycfight.thankspring.modules.blog.bean.ArticlePostEntity;
 import top.wycfight.thankspring.modules.blog.service.ArticlePostService;
 import top.wycfight.thankspring.modules.sys.controller.AbstractController;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -33,22 +35,40 @@ public class ArticlePostController extends AbstractController {
      */
     @RequestMapping("/list")
     @RequiresPermissions("article:post:list")
-    public ResultData list(@RequestParam Map<String,Object> params) {
+    public ResultData list(@RequestParam Map<String, Object> params) {
         PageUtils page = articlePostService.queryPage(params);
-        return ResultData.ok().put("page",page);
+        return ResultData.ok().put("page", page);
     }
 
-
+    /**
+     * 保存文章
+     *
+     * @param articlePostEntity 文章
+     * @return
+     */
+    @SysLog("保存文章")
     @RequestMapping("/save")
     @RequiresPermissions("article:post:save")
     public ResultData save(@RequestBody ArticlePostEntity articlePostEntity) {
-        ValidatorUtils.validateEntity(articlePostEntity,AddGroup.class);
+        ValidatorUtils.validateEntity(articlePostEntity, AddGroup.class);
         articlePostService.save(articlePostEntity);
         return ResultData.ok();
 
     }
 
-
+    /**
+     * 删除文章
+     *
+     * @param postIds 文章IDs
+     * @return
+     */
+    @SysLog("删除文章")
+    @RequestMapping("/delete")
+    @RequiresPermissions("article:post:delete")
+    public ResultData delete(@RequestBody Long[] postIds) {
+        articlePostService.deletePostEntity(Arrays.asList(postIds));
+        return ResultData.ok();
+    }
 
 
 }

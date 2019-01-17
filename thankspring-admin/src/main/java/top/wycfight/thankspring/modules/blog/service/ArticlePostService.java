@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.service.IService;
 import top.wycfight.common.utils.PageUtils;
 import top.wycfight.thankspring.modules.blog.bean.ArticlePostEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,5 +21,15 @@ public interface ArticlePostService extends IService<ArticlePostEntity> {
      */
     PageUtils queryPage(Map<String,Object> params);
 
+    /**
+     * 保存文章
+     * @param articlePostEntity 文章
+     */
     void save(ArticlePostEntity articlePostEntity);
+
+    /**
+     * 删除文章列表
+     * @param postIdList 文章ID列表
+     */
+    void deletePostEntity(List<Long> postIdList);
 }

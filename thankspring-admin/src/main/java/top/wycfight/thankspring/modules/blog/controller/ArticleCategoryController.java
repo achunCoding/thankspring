@@ -35,4 +35,6 @@ public class ArticleCategoryController {
         return ResultData.ok().put("list", categoryEntityList);
     }
 
+
+
 }

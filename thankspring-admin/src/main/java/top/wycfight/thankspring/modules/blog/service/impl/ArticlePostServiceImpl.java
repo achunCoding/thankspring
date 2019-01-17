@@ -15,6 +15,7 @@ import top.wycfight.thankspring.modules.blog.service.ArticlePostService;
 import top.wycfight.thankspring.modules.blog.service.ArticlePostTagService;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,14 +29,15 @@ public class ArticlePostServiceImpl extends ServiceImpl<ArticlePostMapper, Artic
 
     @Autowired
     private ArticlePostTagService articlePostTagService;
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        String postTitle = (String)params.get("postTitle");
-        String postStatus = (String)params.get("postStatus");
+        String postTitle = (String) params.get("postTitle");
+        String postStatus = (String) params.get("postStatus");
         Page<ArticlePostEntity> page = this.selectPage(
                 new Query<ArticlePostEntity>(params).getPage(),
-                new EntityWrapper<ArticlePostEntity>().like(StringUtils.isNotBlank(postTitle),"post_title", postTitle)
-                .like(StringUtils.isNotBlank(postStatus),"post_status",postStatus)
+                new EntityWrapper<ArticlePostEntity>().like(StringUtils.isNotBlank(postTitle), "post_title", postTitle)
+                        .like(StringUtils.isNotBlank(postStatus), "post_status", postStatus)
         );
         return new PageUtils(page);
     }
@@ -46,6 +48,15 @@ public class ArticlePostServiceImpl extends ServiceImpl<ArticlePostMapper, Artic
         articlePostEntity.setPostDate(new Date());
         articlePostEntity.setPostUpdate(new Date());
         this.insert(articlePostEntity);
-        articlePostTagService.saveOrUpdate(articlePostEntity.getPostId(),articlePostEntity.getTagNameList());
+        articlePostTagService.saveOrUpdate(articlePostEntity.getPostId(), articlePostEntity.getTagNameList());
     }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deletePostEntity(List<Long> postIdList) {
+        this.deleteBatchIds(postIdList);
+    }
+
+
 }

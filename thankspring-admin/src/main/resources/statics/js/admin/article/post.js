@@ -91,14 +91,12 @@ var vm = new Vue({
             vm.title = "新增";
             vm.post = {
                 customTpl: 'markdown',
-                postStatus:1,
                 allowComment: 1,
                 allowPing: 1,
                 allowFeed: 1,
                 postContentMd:'',
                 postContent:'',
                 postStatus:'',
-                tagNameList:[]
                 };
             //获取分类信息
             this.getCategoryList();
@@ -117,19 +115,19 @@ var vm = new Vue({
             this.getRoleList();
         },
         del: function () {
-            var userIds = getSelectedRows();
-            if (userIds == null) {
+            var postIds = getSelectedRows();
+            if (postIds == null) {
                 return;
             }
 
             layer.confirm('确定要删除选中的记录？', function () {
                 $.ajax({
                     type: "POST",
-                    url: baseURL + "sys/user/delete",
+                    url: baseURL + "article/post/delete",
                     contentType: "application/json",
-                    data: JSON.stringify(userIds),
+                    data: JSON.stringify(postIds),
                     success: function (r) {
-                        if (r.code == 200) {
+                        if (r.code === 200) {
                             toastr.success("删除成功!", function () {
                                 layer.closeAll("dialog");
                                 vm.reload();
@@ -157,9 +155,9 @@ var vm = new Vue({
             }
             var url = vm.post.postId == null ? "article/post/save" : "article/post/update";
             vm.post.postStatus = status;
-            var value = $('#tags').val();
-            vm.post.tagNameList = value.split(",");
-            console.log(value);
+            // var value = $('#tags').val();
+            // vm.post.tagNameList = value.split(",");
+            // console.log(value);
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
