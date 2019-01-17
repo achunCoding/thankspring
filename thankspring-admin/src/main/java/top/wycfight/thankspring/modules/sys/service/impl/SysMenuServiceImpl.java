@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.wycfight.common.utils.MapUtils;
 import top.wycfight.thankspring.common.utils.Constant;
 import top.wycfight.thankspring.modules.sys.bean.SysMenuEntity;
 import top.wycfight.thankspring.modules.sys.mapper.SysMenuMapper;
 import top.wycfight.thankspring.modules.sys.service.SysMenuService;
+import top.wycfight.thankspring.modules.sys.service.SysRoleMenuService;
 import top.wycfight.thankspring.modules.sys.service.SysUserService;
 
 import java.util.ArrayList;
@@ -25,6 +27,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
 
     @Autowired
     private SysUserService sysUserService;
+
+    @Autowired
+    private SysRoleMenuService sysRoleMenuService;
 
     @Override
     public List<SysMenuEntity> getUserMenuList(Long userId) {
@@ -78,7 +83,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void delete(long menuId) {
+        // 删除菜单
         this.deleteById(menuId);
+        // 删除菜单和角色的关联
+        sysRoleMenuService.deleteByMap(new MapUtils().put("menu_id",menuId));
     }
 
 

@@ -1,4 +1,10 @@
 $(function () {
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        positionClass: "toast-bottom-right",
+        timeOut: "2000",
+    };
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/dict/list',
         datatype: "json",
@@ -67,6 +73,9 @@ var vm = new Vue({
             vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
+			if (vm.validator()) {
+				return;
+			}
 			var url = vm.dict.id == null ? "sys/dict/save" : "sys/dict/update";
 			$.ajax({
 				type: "POST",
@@ -74,13 +83,13 @@ var vm = new Vue({
                 contentType: "application/json",
 			    data: JSON.stringify(vm.dict),
 			    success: function(r){
-			    	if(r.code === 0){
-						alert('操作成功', function(index){
-							vm.reload();
-						});
-					}else{
-						alert(r.msg);
-					}
+                    if (r.code === 200) {
+                        toastr.success("操作成功!", function () {
+                            vm.reload();
+                        });
+                    } else {
+                        toastr.error(r.msg);
+                    }
 				}
 			});
 		},
@@ -90,20 +99,24 @@ var vm = new Vue({
 				return ;
 			}
 			
-			confirm('确定要删除选中的记录？', function(){
+			layer.confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
 				    url: baseURL + "sys/dict/delete",
                     contentType: "application/json",
 				    data: JSON.stringify(ids),
 				    success: function(r){
-						if(r.code == 0){
-							alert('操作成功', function(index){
-								$("#jqGrid").trigger("reloadGrid");
-							});
-						}else{
-							alert(r.msg);
-						}
+                        if (r.code == 200) {
+                            toastr.success("删除成功!", function () {
+                                layer.closeAll("dialog");
+                                vm.reload();
+                            });
+
+                        } else {
+                            layer.closeAll("dialog");
+                            toastr.error(r.msg);
+
+                        }
 					}
 				});
 			});
@@ -120,6 +133,29 @@ var vm = new Vue({
                 postData:{'name': vm.q.name},
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+
+        validator: function(event) {
+            // 部门
+            if (isBlank(vm.dict.name)) {
+                toastr.warning("字典名称不能为空");
+                return true;
+            }
+
+            if (isBlank(vm.dict.type)) {
+                toastr.warning("字典类型不能为空");
+                return true;
+            }
+
+            if (isBlank(vm.dict.code)) {
+                toastr.warning("字典码不能为空");
+                return true;
+            }
+
+            if (isBlank(vm.dict.value)) {
+                toastr.warning("字典值不能为空");
+                return true;
+            }
+        }
 	}
 });
