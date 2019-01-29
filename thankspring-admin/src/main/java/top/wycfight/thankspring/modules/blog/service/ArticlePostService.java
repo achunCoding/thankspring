@@ -25,11 +25,17 @@ public interface ArticlePostService extends IService<ArticlePostEntity> {
      * 保存文章
      * @param articlePostEntity 文章
      */
-    void save(ArticlePostEntity articlePostEntity);
+    void savePostEntity(ArticlePostEntity articlePostEntity);
 
     /**
      * 删除文章列表
      * @param postIdList 文章ID列表
      */
     void deletePostEntity(List<Long> postIdList);
+
+    /**
+     * 更新文章列表
+     * @param articlePostEntity 文章
+     */
+    void updatePostEntity(ArticlePostEntity articlePostEntity);
 }

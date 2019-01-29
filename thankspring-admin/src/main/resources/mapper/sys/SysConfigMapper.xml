@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.wycfight.thankspring.modules.sys.mapper.SysConfigMapper">
+    <select id="queryByKey" resultType="top.wycfight.thankspring.modules.sys.bean.SysConfigEntity" parameterType="String">
+        SELECT * FROM sys_config where param_key = #{paramKey}
+    </select>
+
+    <update id="updateValueByKey" parameterType="map">
+        UPDATE sys_config SET param_value = # {paramValue} WHERE param_key = {paramKey}
+    </update>
+</mapper>

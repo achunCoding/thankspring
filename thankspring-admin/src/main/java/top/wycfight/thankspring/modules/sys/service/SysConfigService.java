@@ -20,23 +20,49 @@ public interface SysConfigService extends IService<SysConfigEntity> {
      * @param params 请求的所有参数信息
      * @return
      */
-    PageUtils queryPage(Map<String,Object> params);
+    public PageUtils queryPage(Map<String,Object> params);
 
     /**
      * 保存系统配置
      * @param sysConfigEntity 系统配置实体
      */
-    void saveSysConfigEntity(SysConfigEntity sysConfigEntity);
+    public void saveSysConfigEntity(SysConfigEntity sysConfigEntity);
 
     /**
      * 更新系统配置
      * @param sysConfigEntity 系统配置实体
      */
-    void updateSysConfigEntity(SysConfigEntity sysConfigEntity);
+    public void updateSysConfigEntity(SysConfigEntity sysConfigEntity);
 
     /**
      * 删除系统配置
      * @param configIdList 系统配置ID
      */
-    void deleteSysConfigEntity(List<Long> configIdList);
+    public void deleteSysConfigEntity(List<Long> configIdList);
+
+    /**
+     * 根据key， 获取value的Object对象
+     * @param key key
+     * @param clazz Object对象
+     * @param <T>
+     * @return
+     */
+    public <T> T getConfigObject(String key, Class<T> clazz);
+
+    /**
+     * 根据key，获取配置的value值
+     * @param key key
+     * @return
+     */
+    public String getValue(String key);
+
+
+    /**
+     * 通过Key更新值
+     * @param key
+     * @param json
+     */
+    public void updateValueByKey(String key, String json);
+
+
 }

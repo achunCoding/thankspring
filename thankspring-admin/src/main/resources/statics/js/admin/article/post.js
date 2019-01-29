@@ -78,7 +78,6 @@ var vm = new Vue({
             postContentMd:'',
             postContent:'',
             postStatus:'',
-            tagNameList:[]
 
         },
     },
@@ -102,17 +101,30 @@ var vm = new Vue({
             this.getCategoryList();
         },
         update: function () {
-            var userId = getSelectedRow();
-            if (userId == null) {
+            var postId = getSelectedRow();
+            if (postId == null) {
                 return;
             }
 
             vm.showList = false;
             vm.title = "修改";
 
-            vm.getUser(userId);
-            //获取角色信息
-            this.getRoleList();
+            vm.getPost(postId);
+
+        },
+        getPost: function(postId) {
+            console.log("")
+            $.get(baseURL + "article/post/info/" + postId, function (r) {
+                vm.post = r.post;
+                if (vm.post.customTpl === 'markdown') {
+                    mditor.value = vm.post.postContentMd;
+
+                } else {
+                    htmlEditor.summernote('code').value = vm.post.postContent;
+                }
+
+            });
+
         },
         del: function () {
             var postIds = getSelectedRows();
@@ -143,9 +155,9 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function (status) {
-            // if (vm.validator()) {
-            //     return;
-            // }
+            if (vm.validator()) {
+                return;
+            }
             var content = vm.post.customTpl === 'markdown' ? mditor.value : htmlEditor.summernote('code');
             if (vm.post.customTpl === 'markdown') {
                 vm.post.postContentMd = content;
@@ -155,9 +167,6 @@ var vm = new Vue({
             }
             var url = vm.post.postId == null ? "article/post/save" : "article/post/update";
             vm.post.postStatus = status;
-            // var value = $('#tags').val();
-            // vm.post.tagNameList = value.split(",");
-            // console.log(value);
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
@@ -172,14 +181,6 @@ var vm = new Vue({
                         toastr.error(r.msg);
                     }
                 }
-            });
-        },
-        getUser: function (userId) {
-            $.get(baseURL + "sys/user/info/" + userId, function (r) {
-                vm.user = r.user;
-                vm.showPassword = false;
-
-                vm.getDept();
             });
         },
         getCategoryList: function () {
@@ -213,7 +214,7 @@ var vm = new Vue({
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
-                postData: {'postTitle': vm.q.postTitle,'category': vm.q.category,'postStatus':vm.q.postStatus},
+                postData: {'postTitle': vm.q.postTitle,'postStatus':vm.q.postStatus},
                 page: page
             }).trigger("reloadGrid");
         },
@@ -249,6 +250,13 @@ var vm = new Vue({
             }
 
         },
+        validator: function(event) {
+            // 部门
+            if (isBlank(vm.post.postTitle)) {
+                toastr.warning("文章标题必须输入");
+                return true;
+            }
+        }
 
 
 

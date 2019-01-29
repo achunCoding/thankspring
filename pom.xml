@@ -29,6 +29,7 @@
         <druid.version>1.1.10</druid.version>
         <mysql.version>5.1.38</mysql.version>
         <mybatisplus.version>2.1.9</mybatisplus.version>
+        <jedis.version>2.9.0</jedis.version>
         <mybatisplus.spring.boot.version>1.0.5</mybatisplus.spring.boot.version>
         <commons.lang.version>2.6</commons.lang.version>
         <joda.time.version>2.9.9</joda.time.version>
@@ -60,7 +61,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
         <!-- RabbitMq-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

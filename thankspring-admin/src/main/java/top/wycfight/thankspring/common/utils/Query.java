@@ -3,6 +3,7 @@ package top.wycfight.thankspring.common.utils;
 import com.baomidou.mybatisplus.plugins.Page;
 import org.apache.commons.lang.StringUtils;
 import top.wycfight.common.xss.SQLFilter;
+import top.wycfight.thankspring.modules.oss.bean.SysOssEntity;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

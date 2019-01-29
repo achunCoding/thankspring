@@ -6,13 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @SpringBootApplication
 @MapperScan(basePackages = {"top.wycfight.thankspring.modules.*.mapper"})
-@EnableCaching
-@EnableTransactionManagement
+@ComponentScan(basePackages = {"top.wycfight.common","top.wycfight.thankspring"})
 public class AdminApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

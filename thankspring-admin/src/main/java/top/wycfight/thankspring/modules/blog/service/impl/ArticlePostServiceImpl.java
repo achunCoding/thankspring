@@ -44,11 +44,10 @@ public class ArticlePostServiceImpl extends ServiceImpl<ArticlePostMapper, Artic
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void save(ArticlePostEntity articlePostEntity) {
+    public void savePostEntity(ArticlePostEntity articlePostEntity) {
         articlePostEntity.setPostDate(new Date());
         articlePostEntity.setPostUpdate(new Date());
         this.insert(articlePostEntity);
-        articlePostTagService.saveOrUpdate(articlePostEntity.getPostId(), articlePostEntity.getTagNameList());
     }
 
 
@@ -56,6 +55,14 @@ public class ArticlePostServiceImpl extends ServiceImpl<ArticlePostMapper, Artic
     @Override
     public void deletePostEntity(List<Long> postIdList) {
         this.deleteBatchIds(postIdList);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updatePostEntity(ArticlePostEntity articlePostEntity) {
+        articlePostEntity.setPostUpdate(new Date());
+        this.updateById(articlePostEntity);
+
     }
 
 
